@@ -27,7 +27,7 @@
 
     <!-- Style css -->
     <link rel="stylesheet" href="{{ asset('FrontOffice/assets/css/style.css') }}">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6vP0kho8N9+IR7tpTvkPCp8NpZ9e2Sd9iPiFbW37tAmpK10mUZtQbHjThB3zQbD" crossorigin="anonymous">
 
     {% endblock %}
 </head>
@@ -78,6 +78,7 @@
                         <div class="icon-box search-mobile-icon">
                             <button><i class="feather-search"></i></button>
                         </div>
+                        
                         <form id="header-search-1" action="#" method="GET" class="large-mobile-blog-search">
                             <div class="rn-search-mobile form-group">
                                 <button type="submit" class="search-button"><i class="feather-search"></i></button>
@@ -85,6 +86,14 @@
                             </div>
                         </form>
                     </div>
+                    <div class="setting-option rn-icon-list notification-badge">
+                        <div class="icon-box">
+                            <a href="{{ path('app_cart_index') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="badge">{{ getCartCount() }}</span>
+                            </a>
+                            </div>
+                        </div>
 
                     <div class="setting-option header-btn rbt-site-header" id="rbt-site-header">
                         <div class="icon-box">
