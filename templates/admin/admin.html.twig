@@ -33,14 +33,19 @@
                                             <td>{{ User.getLastName() }}</td>
                                             <td>{{ User.email }}</td>
                                             <td>
-                                                {% for role in User.getRoles() %}
-                                                    {{ role }}<br>
-                                                {% endfor %}
+                                                {% if User.getRoles() is not empty %}
+                                                    {{ User.getRoles()[0] }}
+                                                {% endif %}
                                             </td>
                                             <td>{{ User.address }}</td>
                                             <td>{{ User.age }}</td>
                                             <th>{{ User.gender }}</th>
-                                            <th></th>
+                                                <th>
+                                                    <form action="{{ path('Delete_User', {'id': User.id}) }}" method="post">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.id) }}">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                            </th>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
