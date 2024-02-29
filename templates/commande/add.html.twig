@@ -57,41 +57,27 @@
                                     <button id="buyButton" class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
 
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     const ethereum = window.ethereum;
-    const walletAddressInput = document.getElementById('walletAddress'); // Ensure this ID matches your form input ID
 
     if (!ethereum || !ethereum.isMetaMask) {
         console.log('MetaMask is not installed!');
-        return;
+        // Optionally, prompt the user to install MetaMask.
     }
-
-    // Check if user has already granted access
-    let accounts = await ethereum.request({ method: 'eth_accounts' });
-
-    if (accounts.length > 0) {
-        // User has already connected MetaMask, fill the wallet address
-        walletAddressInput.value = accounts[0];
-    } else {
-        console.log('MetaMask is locked or the user has not connected any accounts');
-        // Optionally, prompt the user to connect their MetaMask wallet
-        // This requires a user action, such as clicking a "Connect Wallet" button
-    }
+    // Removed the automatic filling of the wallet address from MetaMask.
 });
 
 const buyButton = document.getElementById('buyButton');
 const form = document.getElementById('nftForm');
 const ethereum = window.ethereum;
-const walletAddressInput = document.getElementById('walletAddress'); // Ensure this ID matches your form input ID
 
-const nftPriceInEther = {{ nft.price }}; // Assuming this is how you get the NFT price
+const nftPriceInEther = {{ nft.price }}; // Ensure this matches your template engine's syntax
 const nftPriceInWei = (nftPriceInEther * 1e18).toString();
 const valueInHex = '0x' + BigInt(nftPriceInWei).toString(16);
 
 const sendTransaction = async (event) => {
     event.preventDefault(); // Prevent the form from submitting
 
-    // Ensure MetaMask is installed
     if (!ethereum || !ethereum.isMetaMask) {
         alert('Please install MetaMask.');
         return;
@@ -99,15 +85,12 @@ const sendTransaction = async (event) => {
 
     try {
         // Request account access if needed
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-
-        // Set the first account as the wallet address in the form
-        walletAddressInput.value = accounts[0];
+        await ethereum.request({ method: 'eth_requestAccounts' });
 
         // Transaction parameters
         const transactionParameters = {
             nonce: '0x00', // Ignored by MetaMask
-            to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Replace with your wallet address
+            to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Replace with the recipient's wallet address
             from: ethereum.selectedAddress,
             value: valueInHex,
         };
@@ -120,10 +103,6 @@ const sendTransaction = async (event) => {
 
         console.log('Transaction hash:', txHash);
         alert('Transaction sent! Hash: ' + txHash);
-
-        // If the transaction is successful, you might want to submit the form
-        // or handle the confirmation in another way
-        // form.submit();
     } catch (error) {
         console.error(error);
         alert('An error occurred, please try again.');
@@ -132,6 +111,7 @@ const sendTransaction = async (event) => {
 
 buyButton.addEventListener('click', sendTransaction);
 </script>
+
 
 
                         </form>

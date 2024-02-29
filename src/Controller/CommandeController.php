@@ -31,7 +31,7 @@ class CommandeController extends AbstractController
             foreach ($nfts as $nft){
                 $totalPrice += $nft->getPrice();
         }
-    
+        $commande->setDate(new \DateTime());
         $commande->setTotal($nft->getPrice());
         $form = $this->createForm(CommandeType::class, $commande);
 
@@ -65,6 +65,8 @@ class CommandeController extends AbstractController
 
         $id = $request->query->get('id');
         $commande = new Commande();
+
+        $commande->setDate(new \DateTime());
 
         $nft = $entityManager->getRepository(NFT::class)->find($id);
 
@@ -157,5 +159,25 @@ class CommandeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_Commande', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+    #[Route('/commande/chart', name: 'commande_chart')]
+    public function commandeChart(CommandeRepository $commandeRepository): Response
+    {
+        $purchaseData = $commandeRepository->getTotalPurchasesPerDay();
+        
+        $labels = [];
+        $data = [];
+        foreach ($purchaseData as $dayData) {
+            $labels[] = $dayData['date'];
+            $data[] = $dayData['totalPurchases'];
+        }
+
+        return $this->render('commande/stats.html.twig', [
+            'labels' => $labels,
+            'data' => $data,
+        ]);
     }
 }
