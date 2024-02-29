@@ -55,7 +55,6 @@
 
 
                                     <button id="buyButton" class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const ethereum = window.ethereum;
@@ -64,11 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('MetaMask is not installed!');
         // Optionally, prompt the user to install MetaMask.
     }
-    // Removed the automatic filling of the wallet address from MetaMask.
 });
 
 const buyButton = document.getElementById('buyButton');
-const form = document.getElementById('nftForm');
 const ethereum = window.ethereum;
 
 const nftPriceInEther = {{ nft.price }}; // Ensure this matches your template engine's syntax
@@ -87,9 +84,15 @@ const sendTransaction = async (event) => {
         // Request account access if needed
         await ethereum.request({ method: 'eth_requestAccounts' });
 
+        // Dynamically fetch the correct nonce
+        const nonce = await ethereum.request({
+            method: 'eth_getTransactionCount',
+            params: [ethereum.selectedAddress, 'latest'],
+        });
+
         // Transaction parameters
         const transactionParameters = {
-            nonce: '0x00', // Ignored by MetaMask
+            nonce: nonce, // Use dynamically fetched nonce
             to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Replace with the recipient's wallet address
             from: ethereum.selectedAddress,
             value: valueInHex,
@@ -111,6 +114,7 @@ const sendTransaction = async (event) => {
 
 buyButton.addEventListener('click', sendTransaction);
 </script>
+
 
 
 

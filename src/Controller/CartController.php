@@ -24,8 +24,9 @@ class CartController extends AbstractController
         $sessionId = $session->getId();
 
         $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
-        $nfts = $existingCart->getRelation();
-
+        
+        $nfts = $existingCart?->getRelation();
+        
         if ($existingCart) {
             $cart = new Cart();
             $cart->setSessionId($sessionId);
@@ -101,6 +102,7 @@ class CartController extends AbstractController
         $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
 
         if ($existingCart) {
+            
             foreach ($existingCart->getRelation() as $relation) {
                 $existingCart->removeRelation($relation);
             }

@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Notifier\TexterInterface;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\NFTRepository;
 
 
 #[Route('/user')]
@@ -20,16 +21,20 @@ class UserController extends AbstractController
 {
 
     #[Route('/afterlogin', name: 'afterlogin')]
-    public function test(UserRepository $repo, Security $security): Response
+    public function test(UserRepository $repo, Security $security, NFTRepository $nFTRepository): Response
     {
         
         if ($security->isGranted('ROLE_ADMIN')) 
         {
-            return $this->redirectToRoute('admin_dash');
+            return $this->redirectToRoute('admin_dash', []);
         }
         if ($security->isGranted('ROLE_USER')) 
         {
-            return $this->render('auth/author.html.twig');
+            $nfts = $nFTRepository->findAll();
+
+            return $this->render('auth/author.html.twig', [
+                'nfts' =>  $nfts,
+            ]);
         }
         return $this->redirectToRoute('app_login');
     }

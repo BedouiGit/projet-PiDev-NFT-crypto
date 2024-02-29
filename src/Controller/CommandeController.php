@@ -48,7 +48,7 @@ class CommandeController extends AbstractController
         }
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('afterlogin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commande/checkout.html.twig', [
@@ -86,7 +86,7 @@ class CommandeController extends AbstractController
             $entityManager->persist($nft);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('afterlogin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commande/add.html.twig', [

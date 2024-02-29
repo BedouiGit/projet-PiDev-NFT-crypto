@@ -41,8 +41,8 @@
             <div class="header-inner">
                 <div class="header-left">
                     <div class="logo-thumbnail logo-custom-css">
-                        <a class="logo-light" href="index.html.twig"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
-                        <a class="logo-dark" href="index.html.twig"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
+                        <a class="logo-light" href="{{ path('home_page')}}"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
+                        <a class="logo-dark" href="{{ path('home_page')}}"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
                     </div>
                     <div class="mainmenu-wrapper">
                         <nav id="sideNav" class="mainmenu-nav d-none d-xl-block">
@@ -54,7 +54,7 @@
                                 <li><a href="about.html">About</a>
                                 </li>
                                 <li>
-                                    <a href="#">Explore</a>
+                                    <a href="{{ path('app_nft_show')}}">Explore</a>
                                 </li>
                                 <li>
                                     <a href="blog.html">Blog</a>
@@ -86,6 +86,13 @@
                             </div>
                         </form>
                     </div>
+
+
+                    <div class="setting-option header-btn rbt-site-header" id="rbt-site-header">
+                        <div class="icon-box">
+                            <a id="connectbtn" class="btn btn-primary-alta btn-small" href="connect.html">Wallet connect</a>
+                        </div>
+                    </div>
                     <div class="setting-option rn-icon-list notification-badge">
                         <div class="icon-box">
                             <a href="{{ path('app_cart_index') }}">
@@ -94,16 +101,9 @@
                             </a>
                             </div>
                         </div>
-
-                    <div class="setting-option header-btn rbt-site-header" id="rbt-site-header">
-                        <div class="icon-box">
-                            <a id="connectbtn" class="btn btn-primary-alta btn-small" href="connect.html">Wallet connect</a>
-                        </div>
-                    </div>
-
                     <div class="setting-option rn-icon-list notification-badge">
                         <div class="icon-box">
-                            <a href="activity.html"><i class="feather-bell"></i><span class="badge">6</span></a>
+                            <a href="{{ path('afterlogin') }}"><i class="feather-bell"></i><span class="badge">6</span></a>
                         </div>
                     </div>
 
@@ -199,8 +199,8 @@
         <div class="inner">
             <div class="header-top">
                 <div class="logo logo-custom-css">
-                    <a class="logo-light" href="index.html"><img src="assets/images/logo/NFTUN.png" alt="nft-logo"></a>
-                    <a class="logo-dark" href="index.html"><img src="assets/images/logo/NFTUN.png" alt="nft-logo"></a>
+                    <a class="logo-light" href="{{ path('home_page')}}"><img src="assets/images/logo/NFTUN.png" alt="nft-logo"></a>
+                    <a class="logo-dark" href="{{ path('home_page')}}"><img src="assets/images/logo/NFTUN.png" alt="nft-logo"></a>
                 </div>
                 <div class="close-menu">
                     <button class="close-button">
@@ -266,8 +266,8 @@
                     <div class="widget-content-wrapper">
                         <div class="footer-left">
                             <div class="logo-thumbnail logo-custom-css">
-                                <a class="logo-light" href="index.html"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
-                                <a class="logo-dark" href="index.html"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
+                                <a class="logo-light" href="{{ path('home_page')}}"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
+                                <a class="logo-dark" href="{{ path('home_page')}}"><img src="{{ asset('FrontOffice/assets/images/logo/NFTUN.png') }}" alt="nft-logo"></a>
                             </div>
                             <p class="rn-footer-describe">
                                 Created with the collaboration of over 60 of the world's best NFTUN Artists.
