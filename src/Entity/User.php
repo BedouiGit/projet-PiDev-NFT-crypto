@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,17 +30,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(targetEntity: NFT::class, mappedBy: 'user')]
-    private Collection $nFTs;
+    #[ORM\Column(length: 255)]
+    private ?string $first_name = null;
 
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'user')]
-    private Collection $commandes;
+    #[ORM\Column(length: 255)]
+    private ?string $last_name = null;
 
-    public function __construct()
-    {
-        $this->nFTs = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+    #[ORM\Column]
+    private ?int $age = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $gender = null;
 
     public function getId(): ?int
     {
@@ -133,62 +134,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, NFT>
-     */
-    public function getNFTs(): Collection
+    public function getFirstName(): ?string
     {
-        return $this->nFTs;
+        return $this->first_name;
     }
 
-    public function addNFT(NFT $nFT): static
+    public function setFirstName(string $first_name): static
     {
-        if (!$this->nFTs->contains($nFT)) {
-            $this->nFTs->add($nFT);
-            $nFT->setUser($this);
-        }
+        $this->first_name = $first_name;
 
         return $this;
     }
 
-    public function removeNFT(NFT $nFT): static
+    public function getLastName(): ?string
     {
-        if ($this->nFTs->removeElement($nFT)) {
-            // set the owning side to null (unless already changed)
-            if ($nFT->getUser() === $this) {
-                $nFT->setUser(null);
-            }
-        }
+        return $this->last_name;
+    }
+
+    public function setLastName(string $last_name): static
+    {
+        $this->last_name = $last_name;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
+    public function getAddress(): ?string
     {
-        return $this->commandes;
+        return $this->address;
     }
 
-    public function addCommande(Commande $commande): static
+    public function setAddress(string $address): static
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUser($this);
-        }
+        $this->address = $address;
 
         return $this;
     }
 
-    public function removeCommande(Commande $commande): static
+    public function getAge(): ?int
     {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getUser() === $this) {
-                $commande->setUser(null);
-            }
-        }
+        return $this->age;
+    }
+
+    public function setAge(int $age): static
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): static
+    {
+        $this->gender = $gender;
 
         return $this;
     }
