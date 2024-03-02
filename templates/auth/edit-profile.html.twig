@@ -9,13 +9,11 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
-                    <h5 class="title text-center text-md-start">Edit Profile</h5>
+                    <h5 class="title text-center text-md-start"></h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-list">
-                        <li class="item"><a href="index.html">Home</a></li>
-                        <li class="separator"><i class="feather-chevron-right"></i></li>
-                        <li class="item current">Edit Profile</li>
+                        <a href="{{path('auth_front')}}" class="btn btn-primary ml--10"><i class="feather-eye mr--5"></i> Profile</a>
                     </ul>
                 </div>
             </div>
@@ -30,7 +28,6 @@
             <div class="row plr--70 padding-control-edit-wrapper pl_md--0 pr_md--0 pl_sm--0 pr_sm--0">
                 <div class="col-12 d-flex justify-content-between mb--30 align-items-center">
                     <h4 class="title-left">Edit Your Profile</h4>
-                    <a href="author.html" class="btn btn-primary ml--10"><i class="feather-eye mr--5"></i> Preview</a>
                 </div>
             </div>
             <div class="row plr--70 padding-control-edit-wrapper pl_md--0 pr_md--0 pl_sm--0 pr_sm--0">
@@ -94,92 +91,39 @@
                         </div>
                         <!-- End single tabv content -->
                         <!-- sigle tab content -->
-                        <div class="tab-pane fade" id="nav-homes" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <!-- start personal information -->
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <!-- change password area Start -->
                             <div class="nuron-information">
-
-                                <div class="profile-form-wrapper">
-                                    <div class="input-two-wrapper mb--15">
-                                        <div class="first-name half-wid">
-                                            <label for="contact-name" class="form-label">First Name</label>
-                                            <input name="contact-name" id="contact-name" type="text" value="Mr.">
-                                        </div>
-                                        <div class="last-name half-wid">
-                                            <label for="contact-name-last" class="form-label">Last Name</label>
-                                            <input name="contact-name" id="contact-name-last" type="text" value="Sunayra">
-                                        </div>
-                                    </div>
+                                <div class="condition">
+                                    <h5 class="title">Create Your Password</h5>
+                                    <p class="condition">
+                                        Passwords are a critical part of information and network security. Passwords
+                                        serve to protect user accounts but a poorly chosen password, if compromised,
+                                        could put the entire network at risk.
+                                    </p>
+                                    <hr />
                                     <div class="email-area">
-                                        <label for="Email" class="form-label">Edit Your Email</label>
-                                        <input name="email" id="Email" type="email" value="example@gmail.com">
-                                    </div>
-                                </div>
-
-
-                                <!-- edit bio area Start-->
-                                <div class="edit-bio-area mt--20">
-                                    <label for="Discription" class="form-label">Edit Your Bio</label>
-                                    <textarea id="Discription">Hello, I am Alamin, A Front-end Developer...</textarea>
-                                </div>
-                                <!-- edit bio area End -->
-
-                                <!--  -->
-                                <div class="input-two-wrapepr-prifile">
-                                    <!-- start Role area -->
-                                    <div class="role-area mt--15">
-                                        <label for="Role" class="form-label mb--10">Your Role</label>
-                                        <input name="Role" id="Role" type="text" value="Front-end Developer">
-                                    </div>
-                                    <!-- End Role area -->
-                                    <!-- select gender -->
-                                    <select class="profile-edit-select">
-                                        <option selected>Select Your Gender</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
-                                        <option value="3">Third Gender</option>
-                                    </select>
-                                    <!-- end gender -->
-                                </div>
-
-                                <div class="input-two-wrapper mt--15">
-                                    <div class="half-wid currency">
-                                        <!-- select gender -->
-                                        <select class="profile-edit-select">
-                                            <option selected>Currency</option>
-                                            <option value="1">($)USD</option>
-                                            <option value="2">wETH</option>
-                                            <option value="3">BIT Coin</option>
-                                        </select>
-                                        <!-- end gender -->
-                                    </div>
-                                    <div class="half-wid phone-number">
-                                        <label for="PhoneNumber" class="form-label">Phone Number</label>
-                                        <input name="contact-name" id="PhoneNumber" type="text" value="+880100000000">
+                                        <label for="Email2" class="form-label">Enter Email</label>
+                                        <input name="email" id="Email2" type="email" value="">
                                     </div>
                                 </div>
                                 <div class="input-two-wrapper mt--15">
-                                    <div class="half-wid currency">
-                                        <!-- select gender -->
-                                        <select class="profile-edit-select">
-                                            <option selected>Location</option>
-                                            <option value="1">United State</option>
-                                            <option value="2">Katar</option>
-                                            <option value="3">Canada</option>
-                                        </select>
-                                        <!-- end gender -->
+                                    <div class="old-password half-wid">
+                                        <label for="oldPass" class="form-label">Enter Old Password</label>
+                                        <input name="pass" id="oldPass" type="password">
                                     </div>
-                                    <div class="half-wid phone-number">
-                                        <label for="PhoneNumbers" class="form-label">Address</label>
-                                        <input name="contact-name" id="PhoneNumbers" type="text" value="USA Cidni">
+                                    <div class="new-password half-wid">
+                                        <label for="NewPass" class="form-label">Create New Password</label>
+                                        <input name="password" id="NewPass" type="password">
                                     </div>
                                 </div>
-                                <div class="button-area save-btn-edit">
-                                    <a href="#" class="btn btn-primary-alta mr--15" onclick="customAlert.alert('Cancel Edit Profile?')">Cancel</a>
-                                    <a href="#" class="btn btn-primary" onclick="customAlert.alert('Successfully Saved Your Profile?')">Save</a>
+                                <div class="email-area mt--15">
+                                    <label for="rePass" class="form-label">Confirm Password</label>
+                                    <input name="Password" id="rePass" type="password" value="">
                                 </div>
-
+                                <a href="#" class="btn btn-primary save-btn-edit" onclick="customAlert.alert('Successfully Changed Password?')">Save</a>
                             </div>
-                            <!-- End personal information -->
+                            <!-- change password area ENd -->
                         </div>
                         <!-- End single tabv content -->
 
