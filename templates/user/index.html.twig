@@ -1,39 +1,65 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseback.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %} Data-Tables {% endblock %}
+{% block content %}
 
-{% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div>
+         <h6 class="m-0 font-weight-bold text-primary">Data-Tables</h6>
+         <br>
+        </div>    
+            <a href="{{ path('app_generer_pdf_historique') }}" class="btn btn-primary" onclick="printTable()">Télécharger PDF</a>
+            <a href="{{ path('app_user_new') }}" class="btn btn-primary">Create new account</a>
+    </div>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+       {% for User in users %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
+                <td>{{ User.getFirstName() }}</td>
+                <td>{{ User.getLastName() }}</td>
+                <td>{{ User.email }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    {% if User.getRoles() is not empty %}
+                        {{ User.getRoles()[0] }}
+                    {% endif %}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
+                <td>{{ User.address }}</td>
+                <td>{{User.tel}}</td>
+                <td>{{ User.age }}</td>
+                <th>{{ User.gender }}</th>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': User.id}) }}" class="btn btn-primary">show</a>
+                    <a href="{{ path('app_user_edit', {'id': User.id}) }}" class="btn btn-primary">edit</a>
+                </td>
+                <td>
+                    <form action="{{ path('Delete_User', {'id': User.id}) }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.id) }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+                                              
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    </div>
+</div>
+</div>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
 {% endblock %}

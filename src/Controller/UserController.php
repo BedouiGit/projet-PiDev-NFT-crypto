@@ -14,6 +14,9 @@ use Symfony\Component\Notifier\TexterInterface;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\NFTRepository;
+use Dompdf\Dompdf;
+
+use Dompdf\Options;
 
 
 #[Route('/user')]
@@ -54,6 +57,13 @@ class UserController extends AbstractController
             return $this->render('auth/auth.html.twig');
     }
 
+     #[Route('/editprofile', name: 'edit_profile')]
+     public function edit_profile(UserRepository $repo): Response
+    {
+             return $this->render('auth/edit-profile.html.twig')
+         ;
+    }
+    
 
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
@@ -62,6 +72,7 @@ class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
+
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -129,6 +140,39 @@ class UserController extends AbstractController
         $em->remove($User);
         $em->flush();
 
-        return $this->redirectToRoute('admin_dash');
+        return $this->redirectToRoute('app_user_index');
     }
+
+
+    #[Route('/export-pdf', name: 'app_generer_pdf_historique')]
+    public function exportPdf(UserRepository $userRepository): Response
+    {
+
+    $users = $userRepository->findAll();
+
+    // Créez une instance de Dompdf avec les options nécessaires
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Arial');
+
+    $dompdf = new Dompdf($pdfOptions);
+
+    // Générez le HTML pour représenter la table d'utilisateurs
+    $html = $this->renderView('admin/pdf.html.twig', ['users' => $users]);
+
+    // Chargez le HTML dans Dompdf et générez le PDF
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Générer un nom de fichier pour le PDF
+    $filename = 'user_list.pdf';
+
+    // Streamer le PDF vers le navigateur
+    $response = new Response($dompdf->output());
+    $response->headers->set('Content-Type', 'application/pdf');
+    $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+    // Retournez la réponse
+    return $response;
+}
 }

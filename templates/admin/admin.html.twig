@@ -6,10 +6,12 @@
 <content id="page-top">
 
 
-                    <!-- DataTales Example -->
+                    {# <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <div class="text-center mt-4">
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -45,6 +47,10 @@
                                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.id) }}">
                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                     </form>
+
+                                                    <a href="{{ path('app_user_edit', {'id': User.id}) }}" class="btn btn-primary">Edit</a>
+                                                    
+
                                             </th>
                                         </tr>
                                         {% endfor %}
@@ -52,7 +58,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> #}
 
 </content>
 
