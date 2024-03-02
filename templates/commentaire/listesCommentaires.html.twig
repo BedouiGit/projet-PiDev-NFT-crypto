@@ -1,0 +1,334 @@
+{% extends 'basefront.html.twig' %}
+
+
+{% block content %}
+<style>
+    .news-details {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        font-family: 'Roboto', sans-serif; /* Recommended font for readability */
+        font-size: 22px;
+        line-height: 1.6;
+        color: #b0adad;
+    }
+    
+   
+    
+    .news-details p {
+        margin-bottom: 15px;
+    }
+    
+    .news-details a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    .news-details a:hover {
+        text-decoration: underline;
+    }
+    
+</style>
+<content class="template-color-1 nft-body-connect">
+    <!-- start page title area -->
+    <div class="rn-breadcrumb-inner ptb--30">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h5 class="title text-center text-md-start">Blog Details</h5>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <ul class="breadcrumb-list">
+                        <a href="{{ url('app_afficher_actualite') }}"><button type="button" class="btn btn-success">Retour</button></a>
+
+                    </ul>
+                </div>
+            </div>
+
+        
+        </div>
+    </div>
+    <!-- end page title area -->
+
+    <!-- blog details area start -->
+    <div class="rn-blog-area rn-blog-details-default rn-section-gapTop">
+        <div class="container">
+            <div class="row g-6">
+                <div class="col-xl-8 col-lg-8">
+                    <div class="rn-blog-listen">
+                        <div class="blog-content-top">
+                            <h2 class="title">{{ actualites.titre }}</h2>
+                            <span class="date">{{ actualites.datePublication.format('Y-m-d H:i:s') }}</span>
+                        </div>
+                        <div class="bd-thumbnail">
+                            <div class="large-img mb--30">
+                                <img class="w-100" src="{{ asset('uploads/photos/' ~ actualites.getImageUrl()) }}" alt="Blog Images">
+                            </div>
+                        </div>
+                        <div class="news-details">
+                            {{ actualites.contenu }}
+
+                        </div>
+                        <div class="comments-wrapper pt--40">
+                            <div class="comments-area">
+                                <div class="trydo-blog-comment">
+                                    <h5 class="comment-title mb--40">Comment section:</h5>
+                                   
+
+                                        <!-- Start Single Comment  -->
+                                        {% if commentaires is not empty %}
+    <ul class="comment-list">
+        {% for commentaire in commentaires %}
+            <li class="comment parent">
+                <div class="single-comment">
+                    <div class="comment-author comment-img">
+                        <img class="comment-avatar" src="{{ asset('FrontOffice/assets/images/blog/comment/comment-01.png') }}" alt="Comment Image">
+                        <div class="comment-content">
+                            <div class="commenter">{{ commentaire.author }}</div>
+                            <p>{{ commentaire.contenu }}</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <!-- Affichage si aucun commentaire n'est disponible -->
+    <p>Aucun commentaire disponible pour cette actualité.</p>
+{% endif %}
+<style>
+    .comment-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .comment.parent {
+        margin-bottom: 20px;
+    }
+    
+    .single-comment {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .comment-img {
+        margin-right: 20px;
+    }
+    
+    .comment-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    
+    .comment-content {
+        max-width: 500px; /* Adjust according to your layout */
+    }
+    
+    .commenter {
+        font-weight: bold;
+    }
+    
+    .comment-content p {
+        margin: 0;
+        line-height: 1.4;
+    }
+    
+</style>
+
+                                        <!-- End Single Comment  -->      
+                                    </ul>
+                                    <!-- End Coment List  -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- comment form area Start -->
+                        <!-- Start Contact Form Area  -->
+                        <div class="rn-comment-form pt--60">
+                            <div class="inner">
+                                <div class="section-title">
+                                    <span class="subtitle">Have a Comment?</span>
+                                    <h2 class="title">Leave a Reply</h2>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if form_errors(form.author) %}
+                            <div class="error-message">
+                                {{ form_errors(form.author) }}
+                            </div>
+                        {% endif %}
+                        
+                        <div class="forum-input-ans-wrapper">
+                            <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg" alt="Nft-Profile">
+                            <div class="comment-form">
+                                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'comment-form'}}) }}
+                                <div class="mb-3">
+                                    {{ form_label(form.author, 'Your Name', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.author, {'attr': {'class': 'form-control', 'id': 'author'}}) }}
+                                    {% for error in form.author.vars.errors %}
+                                        <div class="alert alert-danger">{{ error.message }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_label(form.contenu, 'Your Comment', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'id': 'comment', 'placeholder': 'Enter'}}) }}
+                                    {% for error in form.contenu.vars.errors %}
+                                        <div class="alert alert-danger">{{ error.message }}</div>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                        
+                        <!-- End Contact Form Area  -->
+
+                        <!-- comment form area End -->
+                        <div class="row g-5 pt--60">
+                            <div class="col-lg-12">
+                                <h3 class="title">Related Post</h3>
+                            </div>
+                            <!-- start single blog -->
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                <div class="rn-blog" data-toggle="modal" data-target="#exampleModalCenters">
+                                    <div class="inner">
+                                        <div class="thumbnail">
+                                            <a href="blog-details.html">
+                                                <img src="https://www.connaissancedesarts.com/wp-content/thumbnails/uploads/2022/02/cda22_actu_nft_faux_apes_main-tt-width-1200-height-900-fill-0-crop-1-bgcolor-ffffff.jpg" alt="Personal Portfolio Images">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <div class="category-info">
+                                                <div class="category-list">
+                                                    <a href="blog-details.html">Development</a>
+                                                </div>
+                                                <div class="meta">
+                                                    <span><i class="feather-clock"></i> 2 hour read</span>
+                                                </div>
+                                            </div>
+                                            <h4 class="title"><a href="blog-details.html">The services provide for
+                                                    design <i class="feather-arrow-up-right"></i></a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end single blog -->
+                            <!-- start single blog -->
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                <div class="rn-blog" data-toggle="modal" data-target="#exampleModalCenters">
+                                    <div class="inner">
+                                        <div class="thumbnail">
+                                            <a href="blog-details.html">
+                                                <img src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2021%2F10%2Fbored-ape-yacht-club-nft-3-4-million-record-sothebys-metaverse-1.jpg?cbr=1&q=90" alt="Personal Portfolio Images">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <div class="category-info">
+                                                <div class="category-list">
+                                                    <a href="blog-details.html">Design</a>
+                                                </div>
+                                                <div class="meta">
+                                                    <span><i class="feather-clock"></i> 5 min read</span>
+                                                </div>
+                                            </div>
+                                            <h4 class="title"><a href="blog-details.html">More important feature for
+                                                    designer<i class="feather-arrow-up-right"></i></a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end single blog -->
+                            <!-- start single blog -->
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                <div class="rn-blog" data-toggle="modal" data-target="#exampleModalCenters">
+                                    <div class="inner">
+                                        <div class="thumbnail">
+                                            <a href="blog-details.html">
+                                                <img src="https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=465&dpr=1&s=none" alt="Personal Portfolio Images">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <div class="category-info">
+                                                <div class="category-list">
+                                                    <a href="blog-details.html">Marketing</a>
+                                                </div>
+                                                <div class="meta">
+                                                    <span><i class="feather-clock"></i> 10 min read</span>
+                                                </div>
+                                            </div>
+                                            <h4 class="title"><a href="blog-details.html">Inavalide purpose classes &
+                                                    motivation.<i class="feather-arrow-up-right"></i></a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end single blog -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 mt_md--40 mt_sm--40">
+                    <aside class="rwt-sidebar">
+
+                        <div class="rbt-single-widget widget_categories">
+                            <h3 class="title">Categories</h3>
+                            <div class="inner">
+                                <ul class="category-list">
+                                    <li><a href="#"><span class="left-content">Digital Art</span><span class="count-text">300</span></a></li>
+                                    <li><a href="#"><span class="left-content">Collectibles</span><span class="count-text">275</span></a></li>
+                                    <li><a href="#"><span class="left-content">Music</span><span class="count-text">625</span></a></li>
+                                    <li><a href="#"><span class="left-content">Gaming</span><span class="count-text">556</span></a></li>
+                                    <li><a href="#"><span class="left-content">Metaverse</span><span class="count-text">247</span></a></li>
+                                    <li><a href="#"><span class="left-content">Sports</span><span class="count-text">457</span></a></li>
+                                    <li><a href="#"><span class="left-content">Virtual Real Estate</span><span class="count-text">423</span></a></li>
+                                    <li><a href="#"><span class="left-content">Crypto Art</span><span class="count-text">235</span></a></li>
+                                    <!-- Add more categories as needed -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="rbt-single-widget widget_recent_entries mt--40">
+                            <h3 class="title">Recent Posts</h3>
+                            <div class="inner">
+                                <ul>
+                                    {% for actualite in actualites %}
+                                    <li>
+                                        <a class="d-block" href="{{ path('app_afficher_actualite', {'id': actualites.id}) }}">{{ actualites.titre }}</a>
+                                        <span class="cate">{{ actualite.categorie }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+
+                        <div class="rbt-single-widget widget_recent_entries mt--40">
+                            <h3 class="title">JOIN THE CULTURE: NFT NEWSLETTER</h3>
+                            <div class="inner">
+                                <ul>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-color--2" placeholder="Your username" aria-label="Recipient's username">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary-alta btn-outline-secondary" type="button">Subscribe</button>
+                                            </div>
+                                        </div>
+                                    
+
+                        </div>
+                    </ul>
+                </div>
+                        
+                      
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog details area end -->
+
+</content>
+
+{% endblock %}
