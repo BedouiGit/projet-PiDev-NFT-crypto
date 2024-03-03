@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: NFTRepository::class)]
 class NFT
@@ -37,8 +39,8 @@ class NFT
     #[ORM\ManyToMany(targetEntity: Cart::class, mappedBy: 'relation')]
     private Collection $carts;
 
-    #[ORM\ManyToOne(inversedBy: 'nft')]
-    private ?Projets $projets = null;
+    #[ORM\ManyToOne(inversedBy: 'nFTs')]
+    private ?User $User = null;
 
     public function __construct()
     {
@@ -149,14 +151,14 @@ class NFT
         return $this;
     }
 
-    public function getProjets(): ?Projets
+    public function getUser(): ?User
     {
-        return $this->projets;
+        return $this->User;
     }
 
-    public function setProjets(?Projets $projets): static
+    public function setUser(?User $User): static
     {
-        $this->projets = $projets;
+        $this->User = $User;
 
         return $this;
     }

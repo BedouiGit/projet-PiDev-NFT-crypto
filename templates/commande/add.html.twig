@@ -4,9 +4,10 @@
 
 
 {% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/@metamask/onboarding@1.0.0"></script>
 
 
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'nftForm'}}) }}
     <div class="create-area rn-section-gapTop">
         <div class="container">
             <div class="row g-5">
@@ -53,7 +54,8 @@
                             <div style=" height: 20px;"></div>
 
 
-                                    <button class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
+                                    <button id="buyButton" class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
+
 
                         </form>
                     </div>
@@ -68,6 +70,69 @@
             </div>
         </div>
     </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const ethereum = window.ethereum;
+
+    if (!ethereum || !ethereum.isMetaMask) {
+        console.log('MetaMask is not installed!');
+        // Optionally, prompt the user to install MetaMask.
+    }
+});
+
+const buyButton = document.getElementById('buyButton');
+const ethereum = window.ethereum;
+
+const nftPriceInEther = {{ nft.price }}; // Ensure this matches your template engine's syntax
+const nftPriceInWei = (nftPriceInEther * 1e18).toString();
+const valueInHex = '0x' + BigInt(nftPriceInWei).toString(16);
+
+const sendTransaction = async (event) => {
+    event.preventDefault(); // Prevent the form from submitting
+
+    if (!ethereum || !ethereum.isMetaMask) {
+        alert('Please install MetaMask.');
+        return;
+    }
+
+    try {
+        // Request account access if needed
+        await ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Dynamically fetch the correct nonce
+        const nonce = await ethereum.request({
+            method: 'eth_getTransactionCount',
+            params: [ethereum.selectedAddress, 'latest'],
+        });
+
+        // Transaction parameters
+        const transactionParameters = {
+            nonce: nonce, // Use dynamically fetched nonce
+            to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Replace with the recipient's wallet address
+            from: ethereum.selectedAddress,
+            value: valueInHex,
+        };
+
+        // Initiate the transaction
+        const txHash = await ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+
+        console.log('Transaction hash:', txHash);
+        alert('Transaction sent! Hash: ' + txHash);
+
+
+         document.getElementById('nftForm').submit();
+
+    } catch (error) {
+        console.error(error);
+        alert('An error occurred, please try again.');
+    }
+};
+
+buyButton.addEventListener('click', sendTransaction);
+</script>
 
 {{ form_end(form) }}
 

@@ -11,21 +11,110 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+
+
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
+            $builder
+            ->add('first_name', TextType::class, [
+                'label' => 'First Name',
+                'required' => true,
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                    new NotBlank([
+                        'message' => 'Please enter your first name',
                     ]),
                 ],
             ])
+            ->add('last_name', TextType::class, [
+                'label' => 'Last Name',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your last name',
+                    ]),
+                ],
+            ])
+            ->add('email', TextType::class, [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter an email address',
+                        ]),
+                        new Email([
+                            'message' => 'The email "{{ value }}" is not a valid email.',
+                        ]),
+                    ],
+                ])
+                // ->add('roles', ChoiceType::class, [
+                //     'label' => 'Your Role',
+                //     'choices' => [
+                //         'Admin' => 'ROLE_ADMIN',
+                //         'User' => 'ROLE_USER',
+                //     ],
+                //     'expanded' => true, // Renders as a navbar
+                //     'multiple' => false, // Allow only one role selection
+                //     'required' => true,
+                // ])   
+            ->add('address', TextType::class, [
+                    'label' => 'Address',
+                    'required' => true,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter your address',
+                        ]),
+                    ],
+                ])
+            ->add('tel', TextType::class, [
+                    'label' => 'Telephone Number',
+                    'required' => true, // You can set it to false if tel is not mandatory
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter your telephone number',
+                        ]),
+                        new Regex([
+                            'pattern' => '/^\+?\d{1,}$/',
+                            'message' => 'Please enter a valid telephone number',
+                        ]),
+                    ],
+                ])
+            ->add('age', IntegerType::class, [
+                    'label' => 'Age',
+                    'required' => true,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter your age',
+                        ]),
+                        new GreaterThan([
+                            'value' => 0,
+                            'message' => 'Please enter a positive age',
+                        ]),
+                    ],
+                ])
+            ->add('gender', ChoiceType::class, [
+                    'choices' => [
+                        'Male' => 'male',
+                        'Female' => 'female',
+                        'Other' => 'other',
+                    ],
+                    'expanded' => true, // Renders as a navbar
+                ])
+            ->add('agreeTerms', CheckboxType::class, [
+                    'mapped' => false,
+                    'constraints' => [
+                        new IsTrue([
+                            'message' => 'You should agree to our terms.',
+                        ]),
+                    ],
+                ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

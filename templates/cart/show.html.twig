@@ -74,10 +74,14 @@
 							</tbody>
 							
 						</table>
-                            <div class="cart-buttons" style="padding-left:30px; display: grid; grid-template-columns: repeat(2, 200px); justify-content: start; gap: 10px;">
-                                <a href="#" class="btn add-community" style="width:200px;">Empty Cart</a>
-                                <a href="/checkout" class="btn btn-primary add-community" style="width:200px;">Check Out</a>
-                            </div>
+                            {% set checkoutQuery = '' %}
+							{% for nft in nfts %}
+								{% set checkoutQuery = checkoutQuery ~ (checkoutQuery ? '&' : '') ~ 'nftIds[]=' ~ nft.id %}
+							{% endfor %}
+							<div class="cart-buttons" style="padding-left:30px; display: grid; grid-template-columns: repeat(2, 200px); justify-content: start; gap: 10px;">
+								<a href="{{ path('app_cart_empty')}}" class="btn add-community" style="width:200px;">Empty Cart</a>
+								<a href="/checkout?{{ checkoutQuery }}" class="btn btn-primary add-community" style="width:200px;">Check Out</a>
+							</div>
 
 					</div>
 

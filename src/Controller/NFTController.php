@@ -22,6 +22,13 @@ class NFTController extends AbstractController
         ]);
     }
 
+    #[Route('/usershow', name: 'app_nft_usershow', methods: ['GET'])]
+    public function usershow(NFTRepository $nFTRepository): Response
+    {
+        return $this->render('nft/usershow.html.twig', [
+            'nfts' => $nFTRepository->findAll(),
+        ]);
+    }
 
     #[Route('/showback', name: 'app_nft_showback', methods: ['GET'])]
     public function showback(NFTRepository $nFTRepository): Response
@@ -54,7 +61,7 @@ class NFTController extends AbstractController
             $entityManager->persist($nFT);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_nft_new', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('nft/new.html.twig', [

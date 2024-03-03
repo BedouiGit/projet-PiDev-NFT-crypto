@@ -1,0 +1,184 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <style>
+        .container {
+            text-align: center;
+            font-family: Montserrat, sans-serif; /* Change the font here */
+        }
+        
+        /* Custom CSS for the buttons */
+        .btn-modify,
+        .btn-delete,
+        .btn-show-comments {
+            color: #fff;
+            border: none;
+            border-radius: 25px; /* Smaller border radius for a sleeker look */
+            margin: 5px; /* Smaller padding for a smaller button */
+            margin-right: 5px;
+            text-decoration: none;
+            width: 90px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-modify {
+            background-color: #2E7D32; /* Green */
+        }
+
+        .btn-delete {
+            background-color: #B71C1C; /* Red */
+        }
+
+        .btn-show-comments {
+            background-color: #455A64; /* Blue */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the container fills the entire viewport height */
+        }
+        
+        .btn.add-btn {
+            padding: 15px 20px;
+            background-color: #003102; /* Green color */
+            color: white;
+            font-size: 20px;
+            border: none;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transition for background color and box-shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 10px; /* Add left margin for spacing */
+        }
+        
+        .btn.add-btn:hover {
+            background-color: #45a049; /* Darker green color on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        
+    </style>
+
+        <div class="container">
+            <h3>A look at our NFT NEWS:</h3>
+            <hr>
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input id="search-input" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#search-input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("table tr").filter(function() {
+                            $(this).toggle($(this).find('td:first').text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+        </div>
+        
+    
+    <a href="{{ url('app_ajouter_actualite') }}" class="btn add-btn">ADD NEWS</a>
+
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Categorie</th>
+                <th>Date de Publication</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for actualite in actualites %}
+            <tr>
+                <td>{{ actualite.titre }}</td>
+                <td>{{ actualite.contenu }}</td>
+                <td>{{ actualite.categorie }}</td>
+                <td>{{ actualite.datePublication|date('d-m-Y H:i:s') }}</td>
+
+                <td>
+
+                    
+                    <a href="{{ path('app_modifier_actualite', {'id': actualite.id}) }}" class="btn btn-modify">Modify</a>
+                    <a href="{{ path('app_supprimer_actualite', {'id': actualite.id}) }}" class="btn btn-delete">Delete</a>
+                    <button data-actualite-id="{{ actualite.id }}"  class="btn btn-info btn-show-comments">Show</button>
+                </td>
+            </tr>
+            <tr class="comments-row" id="comments-row-{{ actualite.id }}" style="display: none;">
+                <td colspan="5">
+                    <h1>List of Comments</h1>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Author</th>
+                                <th>Contenu</th>
+                                <th>Date de Contenu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comments-body-{{ actualite.id }}">
+                            {% for commentaire in actualite.commentaires %}
+                            <tr>
+                                <td>{{ commentaire.id }}</td>
+                                <td>{{ commentaire.author }}</td>
+                                <td>{{ commentaire.contenu }}</td>
+                                <td>{{ commentaire.dateContenu|date('Y-m-d H:i:s') }}</td>
+                                <td>
+                                    <a href="{{ path('app_supprimer_commentaire', {'id': commentaire.id}) }}" class="btn btn-delete">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // JavaScript to toggle comments visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-show-comments').forEach(button => {
+            button.addEventListener('click', function() {
+                const actualiteId = this.getAttribute('data-actualite-id');
+                const commentsRow = document.getElementById('comments-row-' + actualiteId);
+                if (commentsRow.style.display === 'none') {
+                    // Hide all other comments rows
+                    document.querySelectorAll('.comments-row').forEach(row => {
+                        row.style.display = 'none';
+                    });
+                    // Show comments row for the clicked actualite
+                    commentsRow.style.display = 'table-row';
+                } else {
+                    commentsRow.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

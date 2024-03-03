@@ -13,19 +13,68 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 
+use Symfony\Component\Security\Core\Security;
+
 class CommandeController extends AbstractController
 {
+    #[Route('/checkout', name: 'app_handle_checkout', methods: ['GET', 'POST'])]
+    public function checkout(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $commande = new Commande();
+
+        
+
+        $nftIds = $request->query->get('nftIds', []);
+        $nfts = [];
+        $totalPrice = 0.0;
+    
+            $nfts  = $entityManager->getRepository(NFT::class)->findBy(['id' => $nftIds]);
+            foreach ($nfts as $nft){
+                $totalPrice += $nft->getPrice();
+        }
+        $commande->setDate(new \DateTime());
+        $commande->setTotal($nft->getPrice());
+        $form = $this->createForm(CommandeType::class, $commande);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isvalid()){
+            $entityManager->persist($commande);
+            $entityManager->flush();
+            foreach ($nfts as $nft){
+            $nft->setCommande($commande);
+            $nft->setStatus("private");
+            $entityManager->persist($nft);
+        }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('afterlogin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('commande/checkout.html.twig', [
+            'total' => $totalPrice,
+            'nfts' => $nfts,
+            'commande' => $commande,
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/commande/add', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
 
         $id = $request->query->get('id');
         $commande = new Commande();
 
+        $commande->setDate(new \DateTime());
+
         $nft = $entityManager->getRepository(NFT::class)->find($id);
 
         $commande->setTotal($nft->getPrice());
-        
+
+        $user = $security->getUser();
+        $commande->setUser($user);
 
         $form = $this->createForm(CommandeType::class, $commande);
 
@@ -36,14 +85,16 @@ class CommandeController extends AbstractController
             $entityManager->flush();
             
             $nft->setCommande($commande);
+            $nft->setStatus("private");
             $entityManager->persist($nft);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_Commande', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('afterlogin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commande/add.html.twig', [
             'nft' => $nft,
+            'totalprice' => $nft->getPrice(),
             'commande' => $commande,
             'form' => $form->createView(),
         ]);
@@ -112,4 +163,25 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_Commande', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    #[Route('/commande/chart', name: 'commande_chart')]
+    public function commandeChart(CommandeRepository $commandeRepository): Response
+    {
+        $purchaseData = $commandeRepository->getTotalPurchasesPerDay();
+        
+        $labels = [];
+        $data = [];
+        foreach ($purchaseData as $dayData) {
+            $labels[] = $dayData['date'];
+            $data[] = $dayData['totalPurchases'];
+        }
+
+        return $this->render('commande/stats.html.twig', [
+            'labels' => $labels,
+            'data' => $data,
+        ]);
+    }
+
+
 }

@@ -37,7 +37,7 @@ class CommandeType extends AbstractType
                 ]),
                 new Length([
                     'min' => 26,
-                    'max' => 35,
+                    'max' => 55,
                     'minMessage' => 'Your wallet address must be at least {{ limit }} characters long',
                     'maxMessage' => 'Your wallet address cannot be longer than {{ limit }} characters',
                 ]),

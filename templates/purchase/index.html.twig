@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy with Crypto</title>
+    <script src="https://cdn.jsdelivr.net/npm/@metamask/onboarding@1.0.0"></script>
+</head>
+<body>
+    <button id="buyButton">Buy</button>
+
+    <script>
+        const buyButton = document.getElementById('buyButton');
+        const ethereum = window.ethereum;
+
+        const nftPriceInEther = {{totalprice}};
+        const nftPriceInWei = (nftPriceInEther * 1e18).toString();
+        const valueInHex = '0x' + BigInt(nftPriceInWei).toString(16);
+
+        const sendTransaction = async () => {
+            // Ensure MetaMask is installed
+            if (!ethereum || !ethereum.isMetaMask) {
+                alert('Please install MetaMask.');
+                return;
+            }
+
+            try {
+                // Request account access if needed
+                await ethereum.request({ method: 'eth_requestAccounts' });
+
+                // Transaction parameters
+                const transactionParameters = {
+                    nonce: '0x00', // Ignored by MetaMask
+                    to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Your wallet address
+                    from: ethereum.selectedAddress, // Current user's first account
+                    value: valueInHex, // Hex value of the amount to send (e.g., in wei)
+                    /*
+                    gasPrice: '0x09184e72a000', // Optional
+                    gas: '0x2710', // Optional
+                    data: '0x0', // Optional
+                    */
+                };
+
+                // Initiate the transaction
+                const txHash = await ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [transactionParameters],
+                });
+
+                console.log('Transaction hash:', txHash);
+                alert('Transaction sent! Hash: ' + txHash);
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred, please try again.');
+            }
+        };
+
+        buyButton.addEventListener('click', () => {
+            sendTransaction();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Add{% endblock %}
+
+
+{% block content %}
+
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'nftForm'}}) }}
+    <div class="create-area rn-section-gapTop">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 offset-1 ml_md--0 ml_sm--0">
+                    <!-- file upload area -->
+                    <div class="upload-area">
+
+                        <div class="upload-formate mb--30">
+                            <h6 class="title">
+                                Acquire a new NFT
+                            </h6>
+                        </div>
+{% for nft in nfts %}
+                        <img src="{{ asset(nft.image) }}" style="max-width: 150px;">
+                        <div class="col-md-12">
+                               price :  {{nft.price}}
+                            </div>
+{% endfor %}
+                    </div>
+
+                    <div class="mt--100 mt_sm--30 mt_md--30 d-none d-lg-block">
+                        <h5> Note: </h5>
+                        <span> Service fee : <strong>2.5%</strong> </span> <br>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="form-wrapper-one">
+                        <form class="row" action="#">
+
+                            <div class="col-md-12">
+                                <div class="input-box pb--20">
+                                    {{ form_row(form.Wallet) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="input-box pb--20">
+                                    {{ form_row(form.email) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                               Total :  {{total}} TND
+                            </div>
+
+
+                            <div style=" height: 20px;"></div>
+
+
+                                    <button class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
+                    <h5> Note: </h5>
+                    <span> Service fee : <strong>2.5%</strong> </span> <br>
+                    <span> You will receive : <strong>25.00 ETH $50,000</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ form_end(form) }}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const ethereum = window.ethereum;
+
+    if (!ethereum || !ethereum.isMetaMask) {
+        console.log('MetaMask is not installed!');
+        // Optionally, prompt the user to install MetaMask.
+    }
+});
+
+const buyButton = document.getElementById('buyButton');
+const ethereum = window.ethereum;
+
+const nftPriceInEther = {{ total }}; // Ensure this matches your template engine's syntax
+const nftPriceInWei = (nftPriceInEther * 1e18).toString();
+const valueInHex = '0x' + BigInt(nftPriceInWei).toString(16);
+
+const sendTransaction = async (event) => {
+    event.preventDefault(); // Prevent the form from submitting
+
+    if (!ethereum || !ethereum.isMetaMask) {
+        alert('Please install MetaMask.');
+        return;
+    }
+
+    try {
+        // Request account access if needed
+        await ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Dynamically fetch the correct nonce
+        const nonce = await ethereum.request({
+            method: 'eth_getTransactionCount',
+            params: [ethereum.selectedAddress, 'latest'],
+        });
+
+        // Transaction parameters
+        const transactionParameters = {
+            nonce: nonce, // Use dynamically fetched nonce
+            to: '0x6ac436930Bda6bf231E10C4EEb5f2cADE5f06a43', // Replace with the recipient's wallet address
+            from: ethereum.selectedAddress,
+            value: valueInHex,
+        };
+
+        // Initiate the transaction
+        const txHash = await ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+
+        console.log('Transaction hash:', txHash);
+        alert('Transaction sent! Hash: ' + txHash);
+    } catch (error) {
+        console.error(error);
+        alert('An error occurred, please try again.');
+    }
+};
+
+buyButton.addEventListener('click', sendTransaction);
+</script>
+{% endblock %}

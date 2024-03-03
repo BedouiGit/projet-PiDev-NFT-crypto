@@ -22,8 +22,9 @@ class CartController extends AbstractController
         $sessionId = $session->getId();
 
         $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
-        $nfts = $existingCart->getRelation();
-
+        
+        $nfts = $existingCart?->getRelation();
+        
         if ($existingCart) {
             $cart = new Cart();
             $cart->setSessionId($sessionId);
@@ -70,7 +71,7 @@ class CartController extends AbstractController
 
 
     #[Route('', name: 'app_cart_deletenft', methods: ['GET','POST'])]
-    public function delete(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $session = $request->getSession();
@@ -78,24 +79,37 @@ class CartController extends AbstractController
         $id = $request->query->get('id'); 
 
         $nft = $entityManager->getRepository(NFT::class)->find($id);
-
-        if (!$nft) {
-            $this->addFlash('error', 'NFT not found.');
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
-
         $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
-        if (!$existingCart) {
-            $this->addFlash('error', 'Cart not found.');
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
 
-        $existingCart->removeRelation($nft); 
+        $existingCart->removeRelation($nft);
+
         $entityManager->persist($existingCart);
+        
         $entityManager->flush();
 
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    
+    #[Route('', name: 'app_cart_empty', methods: ['GET','POST'])]
+    public function empty(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->beginTransaction();
+        $session = $request->getSession();
+        $sessionId = $session->getId();
+        $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
+
+        if ($existingCart) {
+            
+            foreach ($existingCart->getRelation() as $relation) {
+                $existingCart->removeRelation($relation);
+            }
+            $entityManager->flush();
+            $entityManager->commit();
+        }
+
+        return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
+
 }
