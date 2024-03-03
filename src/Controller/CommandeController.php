@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
+
 use Symfony\Component\Security\Core\Security;
 
 class CommandeController extends AbstractController
@@ -162,7 +163,6 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_Commande', [], Response::HTTP_SEE_OTHER);
     }
-
 
 
     #[Route('/commande/chart', name: 'commande_chart')]

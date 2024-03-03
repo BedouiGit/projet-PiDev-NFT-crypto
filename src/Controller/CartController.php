@@ -7,12 +7,10 @@ use App\Entity\NFT;
 use App\Form\CartType;
 use App\Repository\CartRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 #[Route('/cart')]
 class CartController extends AbstractController
@@ -81,7 +79,6 @@ class CartController extends AbstractController
         $id = $request->query->get('id'); 
 
         $nft = $entityManager->getRepository(NFT::class)->find($id);
-
         $existingCart = $entityManager->getRepository(Cart::class)->findOneBy(['session_id' => $sessionId]);
 
         $existingCart->removeRelation($nft);
