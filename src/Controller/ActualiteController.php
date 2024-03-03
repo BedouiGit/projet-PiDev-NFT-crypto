@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/actualite')]
 class ActualiteController extends AbstractController
 {
+    
     #[Route('/', name: 'app_actualite')]
     public function index(): Response
     {

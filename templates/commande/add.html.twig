@@ -55,6 +55,21 @@
 
 
                                     <button id="buyButton" class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
+                    <h5> Note: </h5>
+                    <span> Service fee : <strong>2.5%</strong> </span> <br>
+                    <span> You will receive : <strong>25.00 ETH $50,000</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const ethereum = window.ethereum;
@@ -106,6 +121,10 @@ const sendTransaction = async (event) => {
 
         console.log('Transaction hash:', txHash);
         alert('Transaction sent! Hash: ' + txHash);
+
+
+         document.getElementById('nftForm').submit();
+
     } catch (error) {
         console.error(error);
         alert('An error occurred, please try again.');
@@ -114,23 +133,6 @@ const sendTransaction = async (event) => {
 
 buyButton.addEventListener('click', sendTransaction);
 </script>
-
-
-
-
-                        </form>
-                    </div>
-
-                </div>
-
-                <div class="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
-                    <h5> Note: </h5>
-                    <span> Service fee : <strong>2.5%</strong> </span> <br>
-                    <span> You will receive : <strong>25.00 ETH $50,000</strong></span>
-                </div>
-            </div>
-        </div>
-    </div>
 
 {{ form_end(form) }}
 

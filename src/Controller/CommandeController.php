@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
-
+use Symfony\Component\Security\Core\Security;
 
 class CommandeController extends AbstractController
 {
@@ -60,7 +60,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/add', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
 
         $id = $request->query->get('id');
@@ -71,7 +71,9 @@ class CommandeController extends AbstractController
         $nft = $entityManager->getRepository(NFT::class)->find($id);
 
         $commande->setTotal($nft->getPrice());
-        
+
+        $user = $security->getUser();
+        $commande->setUser($user);
 
         $form = $this->createForm(CommandeType::class, $commande);
 

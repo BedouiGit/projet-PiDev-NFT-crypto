@@ -5,36 +5,51 @@
 {% block content %}
     <h1>NFT</h1>
 
-    <table class="table" style="color:white;">
-        <tbody>
-        
+        <div class="rn-collection-area rn-section-gapTop">
+        <div class="container">
+            <div class="row g-5">
 
-            <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Status</td>
-                <td>CreationDate</td>
-                <td>Image</td>
-            </tr>
-            {% for nft in nfts %}
+ {% for nft in nfts %}
             
-            <tr>
-                <td>{{ nft.id }}</td>
-                <td>{{ nft.name }}</td>
-                <td>{{ nft.price }}</td>
-                <td>{{ nft.status }}</td>
-                <td>{{ nft.CreationDate ? nft.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td><img src="{{ asset(nft.image) }}" style="max-width: 80px;"></td>
 
-                <td><a href="{{ path('app_nft_index', {'id': nft.id}) }}">show</a></td>
-                <td><a href="{{ path('app_nft_edit', {'id': nft.id}) }}">edit</a></td>
-               <td> {{ include('nft/delete_form.html.twig') }}</td>
+ 
+  
+                <!-- start single collention -->
+                <div data-sal="slide-up" data-sal-delay="550" data-sal-duration="800" class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12">
+                    <a href="{{ path('app_nft_index', {'id': nft.id}) }}" class="rn-collection-inner-one">
+                        <div class="collection-wrapper">
+                            <div class="collection-big-thumbnail">
+                                <img src="{{ asset(nft.image) }}" alt="Nft_Profile">
+                            </div>
+                            <div class="collection-deg">
+                                <h6 class="title">{{ nft.name }}</h6>
+                                <span class="items">{{ nft.price }}</span>
+                                
+                            </div>
+                            <span> {{ nft.CreationDate ? nft.CreationDate|date('Y-m-d H:i:s') : '' }}</span>
+                                <span> {{ nft.status }} </span>
+                        </div>
+                    </a>
+                </div>
+                <!-- End single collention -->
+                 {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-lg-12" data-sal="slide-up" data-sal-delay="550" data-sal-duration="800">
+                    <nav class="pagination-wrapper" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
 
-            </tr>
-    {% endfor %}
-
-            </tbody>
-
-    </table>
+  
 {% endblock %}

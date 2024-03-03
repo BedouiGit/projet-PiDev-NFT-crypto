@@ -22,6 +22,13 @@ class NFTController extends AbstractController
         ]);
     }
 
+    #[Route('/usershow', name: 'app_nft_usershow', methods: ['GET'])]
+    public function usershow(NFTRepository $nFTRepository): Response
+    {
+        return $this->render('nft/usershow.html.twig', [
+            'nfts' => $nFTRepository->findAll(),
+        ]);
+    }
 
     #[Route('/showback', name: 'app_nft_showback', methods: ['GET'])]
     public function showback(NFTRepository $nFTRepository): Response

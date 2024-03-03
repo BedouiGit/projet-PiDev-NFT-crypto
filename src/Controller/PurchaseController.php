@@ -8,6 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PurchaseController extends AbstractController
 {
+    #[Route('/test', name: 'test_route')]
+public function test(): Response
+{
+    return new Response('Test route works');
+}
+
+
     #[Route('/', name: 'home_page')]
     public function index(): Response
     {
