@@ -1,0 +1,39 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}NFT{% endblock %}
+
+{% block content %}
+    <h1>NFT</h1>
+
+    <table class="table" style="color:white;">
+        <tbody>
+        
+
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Status</td>
+                <td>CreationDate</td>
+                <td>Image</td>
+            </tr>
+            {% for nft in nfts %}
+            <tr>
+                <td>{{ nft.id }}</td>
+                <td>{{ nft.name }}</td>
+                <td>{{ nft.price }}</td>
+                <td>{{ nft.status }}</td>
+                <td>{{ nft.CreationDate ? nft.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td><img src="{{ asset(nft.image) }}" style="max-width: 80px;"></td>
+
+                <td><a href="{{ path('app_nft_index', {'id': nft.id}) }}">show</a></td>
+                <td><a href="{{ path('app_nft_edit', {'id': nft.id}) }}">edit</a></td>
+               <td> {{ include('nft/delete_form.html.twig') }}</td>
+
+            </tr>
+    {% endfor %}
+
+            </tbody>
+
+    </table>
+{% endblock %}

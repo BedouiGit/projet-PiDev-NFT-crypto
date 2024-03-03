@@ -1,0 +1,90 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
+
+
+    <h1>Cart</h1>
+
+	<div class="cart-section mt-150 mb-150" style="padding:50px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-12">
+					<div class="cart-table-wrap">
+						<table class="cart-table">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									
+									<th class="product-image">Product Image</th>
+									<th class="product-name">Name</th>
+									<th class="product-price">Price</th>
+									<th>Action</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+{% for nft in nfts %}
+
+								<tr class="table-body-row">
+									
+									<td class="product-image" style="text-align: center;" ><img src="{{ asset(nft.image) }}" style="max-width: 80px;"></td>
+									<td class="product-name">{{ nft.name }}</td>
+									<td class="product-price">{{ nft.price }}</td>
+									 <td>
+                                    <a style="text-decoration:none" href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-primary-alta btn-outline-secondary">Remove</a>
+                                </td>
+									
+								</tr>
+			{% endfor %}
+                            <tr>
+                                <td colspan="5">Votre panier est vide</td>
+                            </tr>    
+                        
+								
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+                 
+				<div class="col-lg-4">
+					<div class="total-section">
+						<table class="total-table">
+							<thead class="total-table-head">
+
+								<tr class="table-total-row">
+									<th>Total</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<tr class="total-data">
+									<td><strong>Total: </strong></td>
+                                    {% set total = 0 %}
+                                    {% for nft in nfts %}
+                                        {% set total = total + nft.price %}
+                                    {% endfor %}
+									<td>
+                                        {{ total }}
+                                    </td>
+								</tr>
+							</tbody>
+							
+						</table>
+                            <div class="cart-buttons" style="padding-left:30px; display: grid; grid-template-columns: repeat(2, 200px); justify-content: start; gap: 10px;">
+                                <a href="#" class="btn add-community" style="width:200px;">Empty Cart</a>
+                                <a href="/checkout" class="btn btn-primary add-community" style="width:200px;">Check Out</a>
+                            </div>
+
+					</div>
+
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

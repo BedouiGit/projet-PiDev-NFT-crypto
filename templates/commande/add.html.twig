@@ -1,0 +1,74 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Add{% endblock %}
+
+
+{% block content %}
+
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="create-area rn-section-gapTop">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 offset-1 ml_md--0 ml_sm--0">
+                    <!-- file upload area -->
+                    <div class="upload-area">
+
+                        <div class="upload-formate mb--30">
+                            <h6 class="title">
+                                Acquire a new NFT
+                            </h6>
+                        </div>
+
+                        <img src="{{ asset(nft.image) }}" style="max-width: 150px;">
+
+                    </div>
+
+                    <div class="mt--100 mt_sm--30 mt_md--30 d-none d-lg-block">
+                        <h5> Note: </h5>
+                        <span> Service fee : <strong>2.5%</strong> </span> <br>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="form-wrapper-one">
+                        <form class="row" action="#">
+
+                            <div class="col-md-12">
+                                <div class="input-box pb--20">
+                                    {{ form_row(form.Wallet) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="input-box pb--20">
+                                    {{ form_row(form.email) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                               price :  {{nft.price}}
+                            </div>
+
+                            <div style=" height: 20px;"></div>
+
+
+                                    <button class="btn btn-primary btn-user btn-block">{{ button_label|default('Buy') }}</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
+                    <h5> Note: </h5>
+                    <span> Service fee : <strong>2.5%</strong> </span> <br>
+                    <span> You will receive : <strong>25.00 ETH $50,000</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ form_end(form) }}
+
+{% endblock %}
