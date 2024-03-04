@@ -1,0 +1,218 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <style>
+        .container {
+            text-align: center;
+            font-family: Montserrat, sans-serif; /* Change the font here */
+        }
+        
+        /* Custom CSS for the buttons */
+        .btn-modify,
+        .btn-delete,
+        .btn-show-comments {
+            color: #fff;
+            border: none;
+            border-radius: 25px; /* Smaller border radius for a sleeker look */
+            margin: 5px; /* Smaller padding for a smaller button */
+            margin-right: 5px;
+            text-decoration: none;
+            width: 90px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-modify {
+            background-color: #2E7D32; /* Green */
+        }
+
+        .btn-delete {
+            background-color: #B71C1C; /* Red */
+        }
+
+        .btn-show-comments {
+            background-color: #455A64; /* Blue */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the container fills the entire viewport height */
+        }
+        
+        .btn.add-btn {
+            padding: 15px 20px;
+            background-color: #003102; /* Green color */
+            color: white;
+            font-size: 20px;
+            border: none;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transition for background color and box-shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 10px; /* Add left margin for spacing */
+        }
+        
+        .btn.add-btn:hover {
+            background-color: #45a049; /* Darker green color on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        
+    </style>
+            <h3  class=" mb--30 " > Our categories : </h3>
+
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input id="search-input" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr>
+
+        <div class="container">
+            
+            
+            
+
+        </div>
+        
+        <div class="mb--30">
+            <button type="button" class="btn add-btn mb--30" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>
+        </div>
+        
+        <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                        {{ include('category/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    
+
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>PhotoURL</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.nom }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.photoURL }}</td>
+
+                <td>
+
+                    
+                    <a href="{{  path('app_dash_board_category_edit', {'id': category.id}) }}" class="btn btn-modify">Modify</a>
+                    {# <a href="{{ path('app_dash_board_category_delete', {'id': category.id}) }}" class="btn btn-delete">Delete</a> #}
+                    <form action="{{ path('app_dash_board_category_delete', {'id': category.id}) }}"  method="post" onsubmit="return confirm('Are you sure you want to delete this category?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                        <button type="submit" class="btn"> <svg width="20" fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                        </button>
+                    </form>
+
+
+                    <button data-actualite-id="{{ category.id }}"  class="btn btn-info btn-show-comments">Show</button>
+                </td>
+            </tr>
+            <tr class="comments-row" id="comments-row-{{ category.id }}" style="display: none;">
+                <td colspan="5">
+                    <h1>List of Projects :  </h1>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>WalletAddress</th>
+                                <th>DateDeCreation</th>
+                                <th>PhotoURL</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comments-body-{{ category.id }}">
+                            {% for projet in category.projets %}
+                            <tr>
+                                <td>{{ projet.id }}</td>
+                                <td>{{ projet.nom }}</td>
+                                <td>{{ projet.Description }}</td>
+                                <td>{{ projet.WalletAddress }}</td>
+                                <td>{{ projet.DateDeCreation ? projet.DateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ projet.photoURL }}</td>
+                                <td>
+                                    <a href="{{ path('app_projets_dash_board_show', {'id': projet.id}) }}">show</a>
+                                    <a href="{{ path('app_projets_dash_board_edit', {'id': projet.id}) }}">edit</a>                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // JavaScript to toggle comments visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        const addCategoryButton = document.querySelector('.btn.add-btn');
+        addCategoryButton.addEventListener('click', function() {
+            const addCategoryModal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+            addCategoryModal.show();
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-show-comments').forEach(button => {
+            button.addEventListener('click', function() {
+                const actualiteId = this.getAttribute('data-actualite-id');
+                const commentsRow = document.getElementById('comments-row-' + actualiteId);
+                if (commentsRow.style.display === 'none') {
+                    // Hide all other comments rows
+                    document.querySelectorAll('.comments-row').forEach(row => {
+                        row.style.display = 'none';
+                    });
+                    // Show comments row for the clicked actualite
+                    commentsRow.style.display = 'table-row';
+                } else {
+                    commentsRow.style.display = 'none';
+                }
+            });
+        });
+    });
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('uploadedImage').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+{% endblock %}
