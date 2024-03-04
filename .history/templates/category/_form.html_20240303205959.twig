@@ -1,0 +1,60 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6">
+                            <div class="collection-single-wized">
+                                <label for="name" class="title required">Name</label>
+                                <div class="create-collection-input">
+                                    {{ form_widget(form.nom) }}
+                                    {{ form_errors(form.nom) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="collection-single-wized">
+                                <label class="title required">Logo image</label>
+                                <div class="create-collection-input logo-image">
+                                    <div class="logo-c-image logo">
+                                        <img id="rbtinput1" src="{{ asset('FrontOffice/assets/images/profile/profile-01.jpg') }}" alt="Profile-NFT">
+                                        <label for="photoURL" title="No File Choosen">
+                                            <span class="text-center color-white"><i class="feather-edit"></i></span>
+                                        </label>
+                                    </div>
+                                    <div class="button-area">
+                                        <div class="brows-file-wrapper">
+                                            {{ form_widget(form.photoURL, {'id': 'photoURL', 'attr': {'class': 'custom-file-input'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="collection-single-wized">
+                                <label for="description" class="title">Description</label>
+                                <div class="create-collection-input">
+                                    {{ form_widget(form.description) }}
+                                    {{ form_errors(form.description) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

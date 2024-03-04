@@ -1,0 +1,41 @@
+{% extends 'baseback.html.twig' %}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+
+<div style="padding: 20px;">
+    <div>
+        <label style="font-weight: bold;">Logo image</label>
+        <div>
+            <img id="uploadedImage" style="height: 200px; width: 200px; border: 1px solid #ccc; margin-bottom: 10px;" src="{{ asset('FrontOffice/assets/images/profile/profile-01.jpg') }}" alt="Profile-NFT">
+            <label for="photoURL" style="cursor: pointer; color: white; background-color: #007bff; border-radius: 4px; padding: 5px 10px;">Upload Image</label>
+            {{ form_widget(form.photoURL, {'id': 'photoURL', 'attr': {'style': 'display: none;'}, 'onchange': 'previewImage(this)'}) }}
+        </div>
+    </div>
+    <div>
+        <label style="font-weight: bold;">Name</label>
+        <div>
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom) }}
+        </div>
+    </div>
+    <div>
+        <label style="font-weight: bold;">Description</label>
+        <div>
+            {{ form_widget(form.description) }}
+            {{ form_errors(form.description) }}
+        </div>
+    </div>
+    <div>
+        <label style="font-weight: bold;">Explicit & sensitive content</label>
+        <div>
+            <input type="checkbox" id="themeSwitch" name="theme-switch">
+            <label for="themeSwitch">Explicit & sensitive content</label>
+        </div>
+    </div>
+    <div>
+        <button type="submit" style="background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 10px 20px;">{{ button_label|default('Create') }}</button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+{% block %} 
