@@ -1,0 +1,27 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Add/Edit Comment{% endblock %}
+
+{% block Content %}
+    <h1>{{ editMode ? 'Edit Comment' : 'Add Comment' }}</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.name, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+    {{ form_row(form.content, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+    {{ form_errors(form) }} {# Dump all form errors #}
+    
+    <button type="submit" id="submit-comment" class="btn btn-primary">{{ editMode ? 'Update' : 'Submit' }}</button>
+    <a href="{{ path('app_afficher_commentaire') }}" class="btn btn-secondary">Cancel</a>
+    {{ form_end(form) }}
+
+    <script>
+        document.getElementById('submit-comment').addEventListener('click', function(event) {
+            var name = document.getElementById('commentaire_name').value.trim();
+            var content = document.getElementById('commentaire_content').value.trim();
+
+            if (name === '' || content === '') {
+                event.preventDefault();
+                alert('Both Name and Content are required.');
+            }
+        });
+    </script>
+{% endblock %}

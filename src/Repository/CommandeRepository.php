@@ -20,6 +20,17 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
+    
+    public function getTotalPurchasesPerDay(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('SUBSTRING(c.date, 1, 10) as date, COUNT(c.id) as totalPurchases')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return Commande[] Returns an array of Commande objects

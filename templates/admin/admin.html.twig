@@ -1,0 +1,65 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content %}
+
+
+<content id="page-top">
+
+
+                    {# <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <div class="text-center mt-4">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Address</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for User in users %}
+                                        <tr>
+                                            <td>{{ User.getFirstName() }}</td>
+                                            <td>{{ User.getLastName() }}</td>
+                                            <td>{{ User.email }}</td>
+                                            <td>
+                                                {% if User.getRoles() is not empty %}
+                                                    {{ User.getRoles()[0] }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ User.address }}</td>
+                                            <td>{{ User.age }}</td>
+                                            <th>{{ User.gender }}</th>
+                                                <th>
+                                                    <form action="{{ path('Delete_User', {'id': User.id}) }}" method="post">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.id) }}">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+
+                                                    <a href="{{ path('app_user_edit', {'id': User.id}) }}" class="btn btn-primary">Edit</a>
+                                                    
+
+                                            </th>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> #}
+
+</content>
+
+{% endblock %}
