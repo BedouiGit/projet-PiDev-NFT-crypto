@@ -8,8 +8,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class Projets1Type extends AbstractType
 {
@@ -20,22 +18,8 @@ class Projets1Type extends AbstractType
             ->add('Description')
             ->add('WalletAddress')
             ->add('DateDeCreation')
-            ->add('photoURL', FileType::class, [
-                'label' => 'Photo (JPEG or PNG file)',
-                'mapped' => false,
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
-                    ])
-                ],
-            ])
-        ->add('category', EntityType::class, [
+            ->add('photoURL')
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
 'choice_label' => 'id',
             ])

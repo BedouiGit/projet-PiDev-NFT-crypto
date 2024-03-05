@@ -15,25 +15,14 @@ use App\Repository\CategoryRepository; // Assuming you have a Category entity an
 #[Route('/projets')]
 class ProjetsController extends AbstractController
 {
-
     #[Route('/category/{id}', name: 'app_projets_index', methods: ['GET'])]
     public function index(ProjetsRepository $projetsRepository , Request $request , int $id): Response
     {
         $categoryId = $request->attributes->get('id'); 
-        $perPage = 4;
-        $currentPage = (int) $request->query->get('page', 1);
-        $searchTerm = $request->query->get('search');
-    
-        $projets = $projetsRepository->findByCategoryWithPagination($id, $searchTerm, $currentPage, $perPage);
-        $projetsp = $projetsRepository->findBy(['category' => $categoryId]);
-        $totalProjects = count($projetsp);
-        $totalPages = ceil($totalProjects / $perPage);
-
+        $projets = $projetsRepository->findBy(['category' => $categoryId]);
         return $this->render('projets/index.html.twig', [
             'projets' => $projets,
             'categoryId' => $categoryId,
-            'currentPage' => $currentPage,
-            'totalPages' => $totalPages,
         ]);
     }
 

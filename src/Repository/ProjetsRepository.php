@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Projets;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Projets>
@@ -46,22 +45,4 @@ class ProjetsRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
-
-public function findByCategoryWithPagination($id, $searchTerm = null, $currentPage = 1, $perPage = 4)
-{
-    $qb = $this->createQueryBuilder('p')
-        ->andWhere('p.category = :categoryId')
-        ->setParameter('categoryId', $id);
-
-    if ($searchTerm) {
-        $qb->andWhere('p.nom LIKE :searchTerm OR p.Description LIKE :searchTerm OR p.DateDeCreation LIKE :searchTerm')
-           ->setParameter('searchTerm', '%' . $searchTerm . '%');
-    }
-
-    $qb->setFirstResult(($currentPage - 1) * $perPage)
-       ->setMaxResults($perPage);
-
-    return $qb->getQuery()->getResult();
-}
 }
