@@ -46,16 +46,4 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function findAllWithSorting(?string $sortBy = null, ?string $order = 'ASC'): array
-{
-    $queryBuilder = $this->createQueryBuilder('c');
-
-    if ($sortBy) {
-        // Add sorting criteria if provided
-        $queryBuilder->orderBy('c.' . $sortBy, $order);
-    }
-
-    return $queryBuilder->getQuery()->getResult();
-}
-
 }

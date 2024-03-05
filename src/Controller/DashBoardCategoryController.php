@@ -14,48 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/dash/board/category')]
 class DashBoardCategoryController extends AbstractController
 {
-    #[Route('/', name: 'app_dash_board_category_index', methods: ['GET', 'POST'])]
-    public function index(CategoryRepository $categoryRepository,Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/', name: 'app_dash_board_category_index', methods: ['GET'])]
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = new Category();
-        $form = $this->createForm(Category1Type::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Handle photo upload
-            $photoFile = $form->get('photoURL')->getData();
-            if ($photoFile) {
-                // Generate a unique filename
-                $newFilename = uniqid().'.'.$photoFile->guessExtension();
-    
-                // Move the file to the directory where photos are stored
-                $photoFile->move(
-                    $this->getParameter('photos_directory'),
-                    $newFilename
-                );
-    
-                // Set the photo URL in the Category entity
-                $category->setPhotoURL($newFilename);
-            }
-    
-            // Persist the entity
-            $entityManager->persist($category);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_dash_board_category_index', [], Response::HTTP_SEE_OTHER);
-        }
-        $sortBy = $request->query->get('sortBy', 'id');
-        $order = $request->query->get('order', 'ASC');
-        $sortOrder = $order === 'ASC' ? 'DESC' : 'ASC';
-
-        // Retrieve sorted categories using the repository method
-        $categories = $categoryRepository->findAllWithSorting($sortBy, $order);
-    
         return $this->render('dash_board_category/index.html.twig', [
-            'categories' => $categories,
-            'form' => $form->createView(),
-            'sortOrder' => $sortOrder,
-
+            'categories' => $categoryRepository->findAll(),
         ]);
     }
 
@@ -94,31 +57,12 @@ class DashBoardCategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Handle photo upload
-            $photoFile = $form->get('photoURL')->getData();
-            if ($photoFile) {
-                // Generate a unique filename
-                $newFilename = uniqid().'.'.$photoFile->guessExtension();
-    
-                // Move the file to the directory where photos are stored
-                $photoFile->move(
-                    $this->getParameter('photos_directory'),
-                    $newFilename
-                );
-    
-                // Set the photo URL in the Category entity
-                $category->setPhotoURL($newFilename);
-            }
-    
-            // Persist the entity
-            $entityManager->persist($category);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_dash_board_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
-        return $this->render('dash_board_category/editcat.html.twig', [
+        return $this->render('dash_board_category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);

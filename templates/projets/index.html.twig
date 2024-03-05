@@ -3,14 +3,6 @@
 {% block title %} projet {% endblock %}
 
 {% block content %}
-<form method="get" class="input-group p-4" style="margin-left: 200px;" action="{{ path('app_projets_index', {id: categoryId}) }}">
-        <input type="text"
-        class="form-control"
-               name="search"
-               placeholder="Search users..."
-               value="{{ app.request.query.get('search') }}"/>
-        <button class="btn btn-primary" type="submit">Search</button>
-</form> 
 
 <div class="rn-collection-area rn-section-gapTop">
     <div class="container">
@@ -27,8 +19,8 @@
 
                 <a href="{{path('app_projets_show', {'id': projet.id})}}" class="rn-collection-inner-one">
                     <div class="collection-wrapper">
-                        <div class="collection-big-thumbnail mb-3">
-                            <img  style="width: 300px ; height: 300px; " src="{{ asset('uploads/photos/' ~ projet.photoURL) }}" alt="Nft_Profile">
+                        <div class="collection-big-thumbnail">
+                            <img  src="{{ asset('uploads/photos/' ~ projet.photoURL) }}" alt="Nft_Profile">
                         </div>
                         
                         <div class="collenction-small-thumbnail">
@@ -89,38 +81,15 @@
             <div class="col-lg-12" data-sal="slide-up" data-sal-delay="550" data-sal-duration="800">
                 <nav class="pagination-wrapper" aria-label="Page navigation example">
                     <ul class="pagination">
-                            {% if currentPage > 1 %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ path('app_projets_index', {id: categoryId, page: currentPage - 1}) }}" class="first:ml-0 text-xs font-semibold flex w-full items-center justify-center px-4 py-3 rounded-l-lg border border-r-0 border-gray-200 bg-white text-gray-500 hover:bg-gray-100">
-                                    Previous
-                                </a>
-                            </li>
-                        {% endif %}
-                        
-                        {% for i in 1..totalPages %}
-                            <li class="page-item" >
-                                <a class="page-link" href="{{ path('app_projets_index', {id: categoryId, page: i}) }}" class="text-xs font-semibold flex w-full items-center justify-center px-4 py-3 leading-tight border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 {{ currentPage == i ? 'bg-gray-300' : '' }}">
-                                    {{ i }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                        
-                        {% if currentPage < totalPages %}
-                            <li class="page-item" >
-                                <a class="page-link" href="{{ path('app_projets_index', {id: categoryId, page: currentPage + 1}) }}" class="text-xs font-semibold flex w-full items-center justify-center px-4 py-3 rounded-r-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-100">
-                                    Next
-                                </a>
-                            </li>
-                        {% endif %}
-                            </ul>
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
                 </nav>
             </div>
         </div>
-        <div class="mt-4">
-            <nav class="block">
-            </nav>
-        </div>
-        
 
 
     </div>

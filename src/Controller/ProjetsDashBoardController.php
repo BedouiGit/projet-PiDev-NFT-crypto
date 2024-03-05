@@ -30,23 +30,11 @@ class ProjetsDashBoardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $photoFile = $form->get('photoURL')->getData();
-    
-            if ($photoFile) {
-                $newFilename = uniqid().'.'.$photoFile->guessExtension();
-                $photoFile->move(
-                    $this->getParameter('photos_directory'),
-                    $newFilename
-                );
-                $projet->setPhotoUrl($newFilename);
-            }
-    
             $entityManager->persist($projet);
             $entityManager->flush();
-    
-            return $this->redirectToRoute('app_dash_board_category_index', [], Response::HTTP_SEE_OTHER);
-        }
 
+            return $this->redirectToRoute('app_projets_dash_board_index', [], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->render('projets_dash_board/new.html.twig', [
             'projet' => $projet,
@@ -69,23 +57,10 @@ class ProjetsDashBoardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $photoFile = $form->get('photoURL')->getData();
-    
-            if ($photoFile) {
-                $newFilename = uniqid().'.'.$photoFile->guessExtension();
-                $photoFile->move(
-                    $this->getParameter('photos_directory'),
-                    $newFilename
-                );
-                $projet->setPhotoUrl($newFilename);
-            }
-    
-            $entityManager->persist($projet);
             $entityManager->flush();
-    
-            return $this->redirectToRoute('app_dash_board_category_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_projets_dash_board_index', [], Response::HTTP_SEE_OTHER);
         }
-        
 
         return $this->render('projets_dash_board/edit.html.twig', [
             'projet' => $projet,
@@ -101,6 +76,6 @@ class ProjetsDashBoardController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_dash_board_category_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_projets_dash_board_index', [], Response::HTTP_SEE_OTHER);
     }
 }
