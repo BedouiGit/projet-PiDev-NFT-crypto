@@ -1,0 +1,14 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title%} edit project {% endblock %}
+
+
+{% block content%}
+
+    <a href="{{ path('app_projets_index', {'id': projet.id}) }}">back to list</a>
+    
+
+    {{include('projets/form.html.twig', {'button_label': 'update'})}}
+
+
+{% endblock %}

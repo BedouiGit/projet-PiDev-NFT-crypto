@@ -1,0 +1,62 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <style>
+        .container {
+            text-align: center;
+            font-family: Montserrat, sans-serif; /* Change the font here */
+        }
+
+        /* Custom CSS for the buttons */
+        .btn-modify,
+        .btn-delete {
+            color: #fff;
+            border: none;
+            border-radius: 25px; /* Smaller border radius for a sleeker look */
+            padding: 6px 12px; /* Smaller padding for a smaller button */
+            margin-right: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-modify {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .btn-delete {
+            background-color: #f44336; /* Red */
+        }
+    </style>
+
+    <div class="container">
+        <h3>Latest NFT news:</h3>
+    </div>
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Author</th>
+                <th>Contenu</th>
+                <th>Date de Contenu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commentaire in commentaires %}
+            <tr>
+                <td>{{ commentaire.id }}</td>
+                <td>{{ commentaire.author }}</td>
+                <td>{{ commentaire.contenu }}</td>
+                <td>{{ commentaire.dateContenu|date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('app_supprimer_commentaire', {'id': commentaire.id}) }}" class="btn btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

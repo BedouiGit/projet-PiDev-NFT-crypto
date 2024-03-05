@@ -1,0 +1,52 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+
+{% block content %}
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">List of sales</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>email</th>
+                                            <th>wallet</th>
+                                            <th>total</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>email</th>
+                                            <th>wallet</th>
+                                            <th>total</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for commande in commandes %}
+                                        <tr>
+                                            <td>{{ commande.id }}</td>
+                                            <td>{{ commande.email }}</td>
+                                            <td>{{ commande.wallet }}</td>
+                                            <td>{{ commande.total }}</td>
+                                            <td><a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
+                                            {{ include('commande/delete.html.twig') }} </td>
+
+                                        </tr>
+
+                                         {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+{% endblock %}
