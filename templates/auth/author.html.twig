@@ -567,8 +567,11 @@
                     <!-- end single product -->
 
                 </div>
+
                 <div class="tab-pane row g-5 d-flex fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <!-- start single product -->
+                <a style="position: absolute; right: 60px; margin: 60px;" href="{{ path('app_nft_usershow') }}" class="btn btn-primary">list nfts</a>
+
             {% for nft in nfts %}
 
                     {% if nft.user == app.user  %}
@@ -576,7 +579,7 @@
                         <div class="product-style-one no-overlay with-placeBid">
                             <div class="card-thumbnail">
                                 <a href="product-details.html">
-                                    <img src="{{ asset(nft.image) }}" style="max-height: 250px;"  alt="NFT_portfolio">
+                                    <img src="{{ asset('uploads/photos/' ~ nft.image) }}" style="max-height: 250px;"  alt="NFT_portfolio">
                                 </a>
                                 <a href="{{ path('app_nft_index', {'id': nft.id}) }}" class="btn btn-primary">Check out</a>
                             </div>
@@ -620,6 +623,8 @@
 
 
                 </div>
+
+
                 <div class="tab-pane row g-5 d-flex fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                     <!-- start single product -->
                     <div class="col-5 col-lg-4 col-md-6 col-sm-6 col-12">

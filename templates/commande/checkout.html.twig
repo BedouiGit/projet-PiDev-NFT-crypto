@@ -20,7 +20,7 @@
                             </h6>
                         </div>
 {% for nft in nfts %}
-                        <img src="{{ asset(nft.image) }}" style="max-width: 150px;">
+                        <img src="{{ asset('uploads/photos/' ~ nft.image) }}" style="max-width: 150px;">
                         <div class="col-md-12">
                                price :  {{nft.price}}
                             </div>

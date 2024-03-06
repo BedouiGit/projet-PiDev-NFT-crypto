@@ -6,11 +6,13 @@ use App\Entity\NFT;
 use PHPUnit\Framework\Constraint\LessThan;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThan as ConstraintsLessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -54,16 +56,26 @@ class NFTType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('image', TextType::class, [
+            ->add('image', FileType::class, [
+                'label' => 'Photo (JPEG or PNG file)',
+                'mapped' => false,
+                'required' => true,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'The name cannot be blank.',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^.+\/.+(\.png|\.jpg|\.jpeg)$/',
-                        'message' => 'The image path must contain "/" and end with one of the following extensions: .png, .jpg, .jpeg.',
-                    ]),
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
+                    ])
                 ],
+                'attr' => [
+                    'id' => 'photoURL',
+                    'class' => 'custom-file-input',
+                    'onchange' => 'previewImage(this)'
+                ]
+
             ]);
     }
 

@@ -58,11 +58,26 @@ class NFTController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Handle photo upload
+            $photoFile = $form->get('image')->getData();
+            if ($photoFile) {
+                // Generate a unique filename
+                $newFilename = uniqid().'.'.$photoFile->guessExtension();
+    
+                // Move the file to the directory where photos are stored
+                $photoFile->move(
+                    $this->getParameter('photos_directory'),
+                    $newFilename
+                );
+    
+                // Set the photo URL in the Category entity
+                $nFT->setImage($newFilename);
+
             $entityManager->persist($nFT);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
-        }
+        }}
 
         return $this->render('nft/new.html.twig', [
             'nft' => $nFT,
@@ -79,6 +94,21 @@ class NFTController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $photoFile = $form->get('image')->getData();
+            if ($photoFile) {
+                // Générez un nom de fichier unique
+                $newFilename = uniqid().'.'.$photoFile->guessExtension();
+
+                // Déplacez le fichier vers le répertoire où sont stockées les photos
+                $photoFile->move(
+                    $this->getParameter('photos_directory'),
+                    $newFilename
+                );
+
+                // Mettez à jour l'URL de l'image dans l'entité Project
+                $nFT->setImage($newFilename);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
@@ -107,6 +137,7 @@ class NFTController extends AbstractController
 
         return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
     }
+
 
 
 

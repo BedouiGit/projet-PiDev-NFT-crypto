@@ -34,7 +34,7 @@
                             <div class="nav rn-pd-nav rn-pd-rt-content nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                                     <span class="rn-pd-sm-thumbnail">
-                                        <img src="{{ asset(asset(nft.image)) }}" alt="Nft_Profile">
+                                        <img src="{{ asset('uploads/photos/' ~ nft.image) }}" alt="Nft_Profile">
                                     </span>
                                 </button>
 
@@ -43,7 +43,7 @@
                             <div class="tab-content rn-pd-content" id="v-pills-tabContent">
                                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <div class="rn-pd-thumbnail">
-                                        <img src="{{ asset( asset(nft.image) ) }}" alt="Nft_Profile">
+                                        <img src="{{ asset('uploads/photos/' ~ nft.image) }}" alt="Nft_Profile">
                                     </div>
                                 </div>
 
@@ -459,8 +459,5 @@
     </div>
        {% endif %}
  {% endfor %}
-<<<<<<< HEAD
+
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> 225fcf2d7a4fa1b0087aa99324cacef7ef24247b

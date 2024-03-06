@@ -42,7 +42,7 @@
                                             <td>{{ nft.price }}</td>
                                             <td>{{ nft.status }}</td>
                                             <td>{{ nft.CreationDate|date('y') }}</td>
-                                            <td><img src="{{ asset(nft.image) }}" style="max-width: 80px;" ></td>
+                                            <td><img src="{{ asset('uploads/photos/' ~ nft.image) }}" style="max-width: 80px;" ></td>
                                             <td><a href="{{ path('app_nft_edit', {'id': nft.id}) }}">edit</a>
                                             {{ include('nft/delete_form.html.twig') }}</td>
                                         </tr>
