@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CategoryRepository; 
+use App\Repository\CategoryRepository; // Assuming you have a Category entity and corresponding repository
 
 #[Route('/projets')]
 class ProjetsController extends AbstractController
@@ -22,9 +22,12 @@ class ProjetsController extends AbstractController
         $perPage = 4;
         $currentPage = (int) $request->query->get('page', 1);
         $searchTerm = $request->query->get('search');
-
-        $projets = $projetsRepository->findByCategoryWithPagination($id, $searchTerm, $currentPage, $perPage);
+    
+        // Utilisez une méthode dans le repository pour obtenir les projets avec pagination et filtrage
+        $projets = $projetsRepository->findByCategoryWithPaginationAndSearch($id, $searchTerm, $currentPage, $perPage);
         $projetsp = $projetsRepository->findBy(['category' => $categoryId]);
+    
+        // Calculez le nombre total de projets pour la pagination
         $totalProjects = count($projetsp);
         $totalPages = ceil($totalProjects / $perPage);
        
@@ -35,6 +38,7 @@ class ProjetsController extends AbstractController
             'totalPages' => $totalPages,
         ]);
     }
+    
     
 
 #[Route('/category/{categoryId}/new', name: 'app_projets_new', methods: ['GET', 'POST'])]

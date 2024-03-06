@@ -26,8 +26,7 @@
             <!-- start single collection -->
             {% for projet in projets %}
             <div data-sal="slide-up" data-sal-delay="150" data-sal-duration="800" class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12">
-                <div  class="rn-collection-inner-one" > 
-                <a href="{{ path('app_projets_show', {'id': projet.id}) }}">
+                <a href="{{ path('app_projets_show', {'id': projet.id}) }}" class="rn-collection-inner-one"
                     <div class="collection-wrapper">
                         <div class="collection-big-thumbnail mb-3">
                             <img style="width: 300px; height: 300px;" src="{{ asset('uploads/photos/' ~ projet.photoURL) }}" alt="Nft_Profile">
@@ -51,8 +50,7 @@
         {{ include('projets/_delete_form.html.twig') }}
     </div>
 </div>
-</div>
-
+>
                             </div>
                         </div>
                     </div>
