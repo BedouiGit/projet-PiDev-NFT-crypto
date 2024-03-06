@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CategoryRepository; // Assuming you have a Category entity and corresponding repository
+use App\Repository\CategoryRepository; 
 
 #[Route('/projets')]
 class ProjetsController extends AbstractController
