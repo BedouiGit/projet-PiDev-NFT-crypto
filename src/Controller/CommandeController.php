@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\NFT;
+use App\Entity\User;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,7 +61,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/add', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $id = $request->query->get('id');
@@ -72,7 +73,10 @@ class CommandeController extends AbstractController
 
         $commande->setTotal($nft->getPrice());
 
-        $user = $security->getUser();
+        $email = $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        $nft->setUser($user);
+        
         $commande->setUser($user);
 
         $form = $this->createForm(CommandeType::class, $commande);
@@ -96,6 +100,7 @@ class CommandeController extends AbstractController
             'totalprice' => $nft->getPrice(),
             'commande' => $commande,
             'form' => $form->createView(),
+            'user' => $user,
         ]);
 
     }
