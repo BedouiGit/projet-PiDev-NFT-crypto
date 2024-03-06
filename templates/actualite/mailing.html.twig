@@ -1,0 +1,47 @@
+{# templates/emails/subscription_confirmation.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Confirmation</title>
+    <style>
+        /* Styles for desktop */
+        @media only screen and (min-width: 600px) {
+            .container {
+                width: 80%;
+                margin: auto;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f9f9f9;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            }
+            .content {
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #ffffff;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
+        /* Styles for mobile */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 20px;">Welcome to Our Newsletter!</h2>
+            <p>Dear {{ subscriber.name | default(subscriber.email) }},</p>
+            <p>We're excited to have you join our newsletter. Get ready for exclusive updates, special offers, and more delivered straight to your inbox.</p>
+            <p>If you ever have any questions or need assistance, don't hesitate to contact us at no-reply@nftun.com</p>
+            <p>Best Regards,<br>The NFTUN Team</p>
+        </div>
+    </div>
+</body>
+</html>

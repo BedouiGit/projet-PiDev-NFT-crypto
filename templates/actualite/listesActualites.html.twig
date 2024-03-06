@@ -41,6 +41,7 @@
             <h3 class="news-header">Latest NFT News</h3>
             <h4 class="news-subheader">Discover the Latest Trends and Innovations in the NFT Ecosystem</h4>
         </div>
+        
 <style>
     .parallax {
         background-size: cover;
@@ -112,14 +113,34 @@
                                 </div>
                                 <h4 class="title"><a href="{{ path('app_afficher_com', {'id': actualite.id}) }}"><i class="feather-arrow-up-right"></i></a></h4>
                                 <h5 class="card-title">{{ actualite.titre }}</h5>
-                                <!-- Add like button -->
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+         </div>
+
+         
+        <div>
+            <div class="widget-bottom mt--40 pt--40">
+                <h6 class="title">Be one of our subscribers :)</h6>
+                <form method="post" action="{{ path('subscribe') }}" aria-label="Recipient's username">
+                    {{ form_start(form) }}
+                    <div class="input-group">
+                       {{ form_row(form.email, {'attr': {'class': 'form-control', 'type': 'text', 'placeholder': 'Your email'}}) }} 
+                        <div class="input-group-append">
+                            <button class="btn btn-primary-alta btn-outline-secondary" type="submit">Subscribe</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                    
+                </form>
+            </div>
         </div>
-    </div>
+        
+        
+        
+
     
 {% endblock %}
 

@@ -29,4 +29,16 @@ class ActualiteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+   
+   public function chartByCategorie(): array
+   {
+       return $this->createQueryBuilder('a')
+           ->select('a.categorie, COUNT(a.id) as total')
+           ->groupBy('a.categorie')
+           ->getQuery()
+           ->getResult();
+   }
 }
+

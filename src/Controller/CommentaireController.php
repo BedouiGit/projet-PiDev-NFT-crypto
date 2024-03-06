@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Actualite;
 use App\Entity\Commentaire;
 use App\Entity\Subscriber;
+use App\Entity\User;
 use App\Form\CommentaireType;
 use App\Form\NewsletterSubscriptionType;
 use App\Repository\ActualiteRepository;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
+use Symfony\Component\Security\Core\Security;
 
 #[AnnotationRoute('/commentaire')]
 class CommentaireController extends AbstractController
@@ -47,6 +49,11 @@ class CommentaireController extends AbstractController
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
+
+        $email = $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        
+        $commentaire->setAuthor($user->getFirstName() . " " . $user->getLastName());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentaire->setActualite($actualite);
@@ -108,36 +115,6 @@ class CommentaireController extends AbstractController
 
     }
 
-    #[AnnotationRoute('/subscribe', name: 'subscribe')]
-    public function subscribe(Request $request, EntityManagerInterface $em, MailerInterface $mailer): Response
-    {
-        $subscriber = new Subscriber();
-        $form = $this->createForm(NewsletterSubscriptionType::class, $subscriber);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Persist subscriber to the database
-            $em->persist($subscriber);
-            $em->flush();
-            
-            // Send confirmation email
-            $email = (new Email())
-                ->from('sara.hammouda@esprit.tn')
-                ->to($subscriber->getEmail())
-                ->subject('Subscription Confirmation')
-                ->text('Thank you for subscribing!')
-                ->html('<p>Thank you for subscribing!</p>');
-            
-            $mailer->send($email);
-    
-            // Redirect to a suitable route after successful subscription
-            return $this->redirectToRoute('app_afficher_actualite');
-        }
-        
-        return $this->render('commentaire/listesCommentaires.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
     
 

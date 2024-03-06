@@ -87,6 +87,8 @@
                         <div class="comment-content">
                             <div class="commenter">{{ commentaire.author }}</div>
                             <p>{{ commentaire.contenu }}</p>
+                            <a style="color:#dc3545;" href="{{ path('app_supprimer_commentaire1', {'id': commentaire.id}) }}" class="btn btn-delete">Delete</a>
+
                         </div>
                     </div>
                 </div>
@@ -155,29 +157,19 @@
                             </div>
                         </div>
                         
-                        {% if form_errors(form.author) %}
-                            <div class="error-message">
-                                {{ form_errors(form.author) }}
-                            </div>
-                        {% endif %}
+
                         
                         <div class="forum-input-ans-wrapper">
                             <img src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg" alt="Nft-Profile">
                             <div class="comment-form">
                                 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'comment-form'}}) }}
                                 <div class="mb-3">
-                                    {{ form_label(form.author, 'Your Name', {'label_attr': {'class': 'form-label'}}) }}
-                                    {{ form_widget(form.author, {'attr': {'class': 'form-control', 'id': 'author'}}) }}
-                                    {% for error in form.author.vars.errors %}
-                                        <div class="alert alert-danger">{{ error.message }}</div>
-                                    {% endfor %}
-                                </div>
-                                <div class="mb-3">
                                     {{ form_label(form.contenu, 'Your Comment', {'label_attr': {'class': 'form-label'}}) }}
                                     {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'id': 'comment', 'placeholder': 'Enter'}}) }}
                                     {% for error in form.contenu.vars.errors %}
                                         <div class="alert alert-danger">{{ error.message }}</div>
                                     {% endfor %}
+
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add Comment</button>
                                 {{ form_end(form) }}
@@ -305,21 +297,7 @@
                         </div>
                         
 
-                        <div class="rbt-single-widget widget_recent_entries mt--40">
-                            <h3 class="title">JOIN THE CULTURE: NFT NEWSLETTER</h3>
-                            <div class="inner">
-                                <ul>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-color--2" placeholder="Your username" aria-label="Recipient's username">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary-alta btn-outline-secondary" type="button">Subscribe</button>
-                                            </div>
-                                        </div>
-                                    
-
-                        </div>
-                    </ul>
-                </div>
+                       
                         
                       
                     </aside>

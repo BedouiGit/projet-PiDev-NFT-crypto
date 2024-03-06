@@ -1,0 +1,35 @@
+{% extends 'basefront.html.twig' %}
+
+{% block content %}
+    <style>
+        /* Center the content */
+        .center-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Style the confirmation box */
+        .confirmation-box {
+            background-color: #ffffff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+    </style>
+
+    <div class="center-box">
+        <div class="confirmation-box">
+            <h1>Confirm Deletion</h1>
+            <p>Are you sure you want to delete this commentaire?</p>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <a href="{{ path('app_afficher_actualitee', {'id': commentaire.getActualite().getId()}) }}" class="btn btn-secondary">Cancel</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
