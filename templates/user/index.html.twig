@@ -8,10 +8,13 @@
         <div>
          <h6 class="m-0 font-weight-bold text-primary">Data-Tables</h6>
          <br>
-        </div>    
+        </div>
+        <div class="text-center">    
             <a href="{{ path('app_generer_pdf_historique') }}" class="btn btn-primary" onclick="printTable()">Télécharger PDF</a>
             <a href="{{ path('app_user_new') }}" class="btn btn-primary">Create new account</a>
+        </div> 
     </div>
+
     <div class="card-body">
     <div class="table-responsive">
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -51,7 +54,21 @@
                     <form action="{{ path('Delete_User', {'id': User.id}) }}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.id) }}">
                         <button type="submit" class="btn btn-danger">Delete</button>
+                        <br>
+                        {% if User.isBanned %} 
+                            <a class="btn btn-warning w-100" href="{{ path('app_admin_unblock_user', {'userId': User.id}) }}">UnBlock </a>
+                        {% else %} 
+                            <a class="btn btn-danger w-100" href="{{ path('app_admin_block_user', {'userId': User.id}) }}">Block </a>
+                        {% endif %}
                     </form>
+
+                    {# <form >
+                        {% if User.isBanned %} 
+                            <a class="btn btn-warning w-100" href="{{ path('app_admin_unblock_user', {'userId': User.id}) }}">UnBlock</a>
+                        {% else %} 
+                            <a class="btn btn-danger w-100" href="{{ path('app_admin_block_user', {'userId': User.id}) }}">Block</a>
+                        {% endif %}
+                    </form> #}
                 </td>
                                               
             </tr>

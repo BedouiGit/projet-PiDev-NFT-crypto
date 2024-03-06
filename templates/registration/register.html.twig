@@ -1,24 +1,78 @@
-{% extends 'base.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
-{% block body %}
-    <h1>Register</h1>
+{% block content %}
+    <div class="login-area rn-section-gapTop">
+        <div class="container">
+            <div class="row g-5">
+                <div class="offset-2 col-lg-4 col-md-6 ml_md--0 ml_sm--0 col-sm-12">
+                    <div class="form-wrapper-one registration-area">
+                        <h4>Sign up</h4>
+                        <form name="registrationForm" method="post">
+                            {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                            <div class="mb-5">
+                                <label for="firstName" class="form-label">First name</label>
+                                {{form_widget(registrationForm.first_name) }}
+                            </div>
+                            <div class="mb-5">
+                                <label for="sastName" class="form-label">Last name</label>
+                                {{form_widget(registrationForm.last_name) }}
+                            </div>
 
-    {{ form_errors(registrationForm) }}
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.first_name) }}
-        {{ form_row(registrationForm.last_name) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.address) }}
-        {{ form_row(registrationForm.tel) }}
-        {{ form_row(registrationForm.age) }}
-        {{ form_row(registrationForm.gender) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                            <div class="mb-5">
+                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                {{form_widget(registrationForm.email) }}
+                            </div>
+			                <div class="mb-5">
+                                    <label for="address" class="form-label">Address</label>
+                                    {{ form_widget(registrationForm.address) }}
+                                </div>
+                                <div class="mb-5">
+                                <label for="tel" class="form-label">Phone Number</label>
+                                {{ form_widget(registrationForm.tel) }}
+                                </div>
+                                <div class="mb-5">
+                                <label for="gender" class="form-label">Gender</label>
+                                {{ form_widget(registrationForm.gender) }}
+                                </div>
+                                <div class="mb-5">
+                                <label for="age" class="form-label">Age</label>
+                                {{ form_widget(registrationForm.age) }}
+                                </div>
+                                <div class="mb-5">
+                                <label for="newPassword" class="form-label"> Password</label>
+                                {{form_widget(registrationForm.plainPassword) }}
+                            </div>
+                
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                            <div class="mb-5 rn-check-box">
+                                {{ form_widget(registrationForm.captcha) }}
+                                {{ form_errors(registrationForm.captcha) }}
+                            </div>
+
+                            <div class="mb-5 rn-check-box">
+                                <input type="checkbox" class="rn-check-box-input" id="exampleCheck1">
+                                <label class="rn-check-box-label" for="exampleCheck1">Allow to all tearms & condition</label>
+                            </div>
+                          
+                            
+                            <button type="submit" class="btn btn-primary mr--15">Sign Up</button>
+                            {{ form_end(registrationForm) }}
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="social-share-media form-wrapper-one">
+                        <h6>Another way to sign up</h6>
+                        <p> Lorem ipsum dolor sit, amet sectetur adipisicing elit.cumque.</p>
+                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/google.png" alt=""> <span>Log in with Google</span></button>
+                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt=""> <span>Log in with Facebook</span></button>
+                        <button class="another-login login-twitter"> <img class="small-image" src="FrontOffice/assets/images/icons/tweeter.png" alt=""> <span>Log in with Twitter</span></button>
+                        <button class="another-login login-linkedin"> <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt=""> <span>Log in with linkedin</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

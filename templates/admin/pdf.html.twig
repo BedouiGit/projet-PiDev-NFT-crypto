@@ -55,12 +55,12 @@
         <tbody>
             {% for user in users %}
             <tr>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{% if User.getRoles() is not empty %}
-                        {{ User.getRoles()[0] }}
+                <td>{{ user.getFirstName() }}</td>
+                <td>{{ user.getLastName() }}</td>
+                <td>{% if user.getRoles() is not empty %}
+                        {{ user.getRoles()[0] }}
                     {% endif %}</td>
-                <td>{{ user.adress }}</td>
+                <td>{{ user.address }}</td>
                 <td>{{ user.age }}</td>
                 <td>{{ user.gender }}</td>
                 <td>{{ user.tel }}</td>

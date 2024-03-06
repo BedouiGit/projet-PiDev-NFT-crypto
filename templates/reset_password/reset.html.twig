@@ -1,0 +1,27 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+            <div class="row g-5">
+                <div class=" offset-2 col-lg-4 col-md-6 ml_md--0 ml_sm--0 col-sm-12">
+                    <div class="form-wrapper-one">
+                        <h4>Reset your password</h4>
+                        {{ form_start(resetForm) }}
+                            <div class="mb-5">
+                                {{ form_row(resetForm.plainPassword) }}
+                                                                   
+                            </div>
+
+                            <button class="btn btn-primary">Reset password</button>
+                        {{ form_end(resetForm) }}
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+
+

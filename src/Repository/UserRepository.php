@@ -39,6 +39,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function getUsersByAge(): array
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->select('u.age, COUNT(u.id) AS userCount')
+            ->groupBy('u.age');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
