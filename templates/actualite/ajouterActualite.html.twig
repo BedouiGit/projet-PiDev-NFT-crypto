@@ -1,0 +1,52 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Ajout d'un actualite{% endblock %}
+
+{% block content %}
+    <h2>Create News</h2>
+    <a href="{{ url('app_afficher_actualitee') }}"><button type="button" class="btn btn-success">Retour</button></a>
+    <div class="container mt-4">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+        <div class="form-group row">
+                <label for="titre" class="col-sm-2 col-form-label">Titre du actualite :</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.titre, {'attr': {'class': 'form-control', 'placeholder': 'Titre'}}) }}
+                    {% for error in form.titre.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="contenu" class="col-sm-2 col-form-label">Contenu du actualite :</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Contenu'}}) }}
+                    {% for error in form.contenu.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="categorie" class="col-sm-2 col-form-label">Categorie :</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.categorie, {'attr': {'class': 'form-control', 'placeholder': 'La categorie'}}) }}
+                    {% for error in form.categorie.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group row">
+            <label for="image" class="col-sm-2 col-form-label">Image :</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.image_url, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionner une image'}}) }}
+                
+            </div>
+                </div>
+          
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
