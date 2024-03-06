@@ -1,8 +1,9 @@
 {% extends 'basefront.html.twig' %}
 
 {% block content %}
+
 <content>
-    
+    {% set user =app.user %}    
 
     <div class="rn-author-bg-area bg_image--9 bg_image ptb--150">
         <div class="container">
@@ -21,10 +22,10 @@
                                 <img src="FrontOffice/assets/images/slider/banner-06.png" alt="">
                             </div>
                             <div class="rn-author-info-content">
-                                <h3 class="title">{{app.user.getlastName()}}  {{app.user.getfirstName()}}</h3>
+                                <h3 class="title">{{ user.getlastName()}}  {{ user.getfirstName()}}</h3>
                                 <a href="https://twitter.com/i/flow/login" class="social-follw">
                                     <i data-feather="twitter"></i>
-                                    <span class="user-name">{{app.user.getfirstName()}}</span>
+                                    <span class="user-name">{{user.getfirstName()}}</span>
                                 </a>
                                 <div class="follow-area">
                                     <div class="follow followers">
@@ -49,13 +50,18 @@
                                                 <button type="button" class="btn-setting-text report-text" data-bs-toggle="modal" data-bs-target="#reportModal">
                                                     Report
                                                 </button>
-                                                <button type="button" class="btn-setting-text report-text">
-                                                    Claim Owenership
-                                                </button>
+                                                {% if app.user %}
+                                                    <div class="mb-3">
+                                                        <br>
+                                                        <a href="{{ path('app_logout') }}" class="btn-setting-text report-text">
+                                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
-
+                                    <a href="{{ path('edit_auth', {'id': user.id}) }}" class="btn at-follw follow-button edit-btn"><i data-feather="edit"></i></a>
 
                                 </div>
                             </div>

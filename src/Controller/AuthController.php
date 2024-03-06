@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use League\OAuth2\Client\Provider\Google;
 
 class AuthController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -29,4 +31,18 @@ class AuthController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+    // #[Route("/custom_login", name: "app_login_II")]
+    // public function Custom_login(Google $google): Response
+    // {
+    //     return $this->render('login.html.twig', [
+    //         'google_oauth_link' => $google->getAuthorizationUrl()
+    //     ]);
+    // }
+
+    // #[Route("/auth/google", name: "auth_google")]
+    // public function google()
+    // {
+    //     throw new \LogicException('All google authentication should be handled in GoogleAuthenticator.');
+    // }
+
 }

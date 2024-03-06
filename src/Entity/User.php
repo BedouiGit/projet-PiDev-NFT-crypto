@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -27,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column ]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -47,6 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?int $tel = null;
+
+
+    #[ORM\Column]
+    private ?bool $isBanned = false;
+
+    
+
 
     public function getId(): ?int
     {
@@ -206,6 +214,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->tel = $tel;
 
+        return $this;
+    }
+
+    public function isIsBanned(): ?bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): self
+    {
+        $this->isBanned = $isBanned;
+        return $this;
+    }
+
+    public function setUserBlocked(): static
+    {
+
+        $this->isBanned=true;
+        return $this;
+    }
+    public function setUserUnBlock(): static
+    {
+
+        $this->isBanned=false ;
         return $this;
     }
 }

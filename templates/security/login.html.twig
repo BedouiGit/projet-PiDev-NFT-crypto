@@ -1,32 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
-{% block body %}
+{% block content %}
 <form action="{{ path('app_login') }}" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {% if app.user %}
+    {# {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
-    {% endif %}
+    {% endif %} #}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+<!-- login form -->
+    <div class="login-area rn-section-gapTop">
+        <div class="container">
+            <div class="row g-5">
+                <div class=" offset-2 col-lg-4 col-md-6 ml_md--0 ml_sm--0 col-sm-12">
+                    <div class="form-wrapper-one">
+                        <h4>Login</h4>
+                        <form>
+                            <div class="mb-5">
+                                <label for="inputEmail" class="form-label">Email address</label>
+                                <input style="color:white;" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            </div>
+                            <div class="mb-5">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input style="color:white;" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                            </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}">
-           
-    <input type="hidden" name="{{path('afterlogin')}}" value="/auth"> 
+                            <div class="mb-5 rn-check-box">
+                                <input type="checkbox" class="rn-check-box-input" id="exampleCheck1">
+                                <label class="rn-check-box-label" for="exampleCheck1">Remember me leter</label>
+                            </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <input type="hidden" name="{{path('afterlogin')}}" value="/auth"> 
+
+                            <button type="submit" class="btn btn-primary mr--15">Log In</button>
+                            <a href="{{path('app_register')}}" class="btn btn-primary-alta">Sign Up</a>
+                            <br>
+                            <br>
+                            <a href="{{ path('app_forgot_password_request')}}">Forgot password ?</a>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="social-share-media form-wrapper-one">
+                        <h6>Another way to log in</h6>
+                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/google.png" alt=""> <span>Log in with Google</span></button>
+                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt=""> <span>Log in with Facebook</span></button>
+                        <button class="another-login login-twitter"> <img class="small-image" src="FrontOffice/assets/images/icons/tweeter.png" alt=""> <span>Log in with Twitter</span></button>
+                        <button class="another-login login-linkedin"> <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt=""> <span>Log in with linkedin</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login form end -->
 {% endblock %}
+
+

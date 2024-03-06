@@ -37,7 +37,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"> Admin Dash <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3"> Admin Dash <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -101,7 +101,7 @@
                 Addons
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Register -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ path('app_afficher_actualitee') }}">
                     <i class="fas fa-fw fa-folder"></i>
@@ -114,11 +114,15 @@
                         
                     </div>
                 </div>
+                <a class="nav-link" href="{{ path('app_user_new') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Register</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app-chart') }}">
+                <a class="nav-link" href="{{path('app_chart')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
@@ -323,18 +327,19 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                           {#  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{app.user.getlastName()}}  {{app.user.getfirstName()}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset('BackOffice/img/undraw_profile.svg') }}">
-                            </a> #}
+                            </a> 
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                               <!--     app.user.userIdentifier }} -->
+                                     Profile
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -346,8 +351,8 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 {% if app.user %}
-                                    <div class="mb-3">
-                                         <a href="{{ path('app_logout') }}">Logout</a>
+                                    <div class="text-center">
+                                        <a href="{{ path('app_logout') }}" class="btn btn-secondary">Logout</a>
                                     </div>
                                 {% endif %}
                             </div>
@@ -377,7 +382,7 @@
 
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; NFTUN 2024</span>
                     </div>
                 </div>
 

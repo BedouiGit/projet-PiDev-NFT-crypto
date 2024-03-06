@@ -13,11 +13,13 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 
 class UserType extends AbstractType
@@ -123,6 +125,21 @@ class UserType extends AbstractType
                 ]),
             ],
         ])
+        // ->add('photoURL', FileType::class, [
+        //     'label' => 'Photo (JPEG or PNG file)',
+        //     'mapped' => false,
+        //     'required' => true,
+        //     'constraints' => [
+        //         new File([
+        //             'maxSize' => '1024k',
+        //             'mimeTypes' => [
+        //                 'image/jpeg',
+        //                 'image/png',
+        //             ],
+        //             'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
+        //             ])
+        //         ],
+        //     ])
         ;
     }
 
