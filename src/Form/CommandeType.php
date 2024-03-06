@@ -45,7 +45,6 @@ class CommandeType extends AbstractType
                 ]),
             ],
         ])
-
         ;
     }
 

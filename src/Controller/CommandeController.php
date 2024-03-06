@@ -169,7 +169,6 @@ class CommandeController extends AbstractController
     }
 
 
-
     #[Route('/commande/chart', name: 'commande_chart')]
     public function commandeChart(CommandeRepository $commandeRepository): Response
     {

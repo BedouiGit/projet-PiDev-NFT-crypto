@@ -1,0 +1,10 @@
+{% extends 'baseback.html.twig' %}
+{% block title %}New Projets{% endblock %}
+
+{% block body %}
+    <h1>Create new Projets</h1>
+
+    {{ include('projets_dash_board/_form.html.twig') }}
+
+    <a href="{{ path('app_projets_dash_board_index') }}">back to list</a>
+{% endblock %}

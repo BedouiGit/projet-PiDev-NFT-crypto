@@ -1,0 +1,68 @@
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Create Collection</h6>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.nom, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Enter name'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.Description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.Description, {'attr': {'class': 'form-control', 'placeholder': 'Enter description'}}) }}
+                    {{ form_errors(form.Description) }}
+                </div>
+
+
+                <div class="mb-3">
+                    {{ form_label(form.WalletAddress, 'Wallet Address', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.WalletAddress, {'attr': {'class': 'form-control', 'placeholder': 'Enter wallet address'}}) }}
+                    {{ form_errors(form.WalletAddress) }}
+                </div>
+
+                <div class="d-none">
+                    {{ form_label(form.DateDeCreation, 'Date of Creation', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.DateDeCreation, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.DateDeCreation) }}
+                </div>
+
+                <div class="form-group">
+                    <label for="photoURL" class="font-weight-bold">Logo image</label>
+                    <div class="custom-file">
+                        {{ form_widget(form.photoURL, {'id': 'photoURL', 'class': 'custom-file-input', 'onchange': 'previewImage(this)', 'aria-describedby': 'inputGroupFileAddon01'}) }}
+                        <label class="custom-file-label" for="photoURL">Choose file</label>
+                    </div>
+
+                    <div class="mt-3">
+                        <img id="uploadedImage" style="height: 200px; width: 200px; border: 1px solid #ccc; margin-bottom: 10px;" src="{{ asset('FrontOffice/assets/images/profile/profile-01.jpg') }}" alt="Profile-NFT">
+                    </div>
+
+                </div>
+
+                <div class="d-none">
+                    {{ form_label(form.category, 'Photo URL', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.category, {'attr': {'class': 'form-control', 'placeholder': 'Enter photo URL'}}) }}
+                    {{ form_errors(form.category) }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{{ path('app_dash_board_category_index') }}" class="btn btn-secondary">Back to List</a>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+
