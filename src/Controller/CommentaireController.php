@@ -60,7 +60,7 @@ class CommentaireController extends AbstractController
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_afficher_com', ['id' => $id]);
+            return $this->redirectToRoute('app_afficher_com', ['id' => $id, 'author' => $user->getFirstName()]);
         }
 
         $commentaires = $commentaireRepository->findBy(['actualite' => $actualite]);

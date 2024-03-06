@@ -1,0 +1,10 @@
+knp_paginator:
+    page_range: 5                      # Number of pages displayed in the pagination menu
+    default_options:
+        page_name: page                # Name of the query parameter used for pagination
+        sort_field_name: sort          # Name of the query parameter used for sorting
+        sort_direction_name: direction # Name of the query parameter used for sorting direction
+        distinct: true                 # Ensure distinct results when paginating over joined entities
+    template:
+        pagination: '@KnpPaginator/Pagination/sliding.html.twig' # Twig template for pagination
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # Twig template for sortable links

@@ -239,7 +239,7 @@ public function supprimerCommentaire1(Commentaire $commentaire, EntityManagerInt
         $em->remove($commentaire);
         $em->flush();
         $this->addFlash('success', 'Commentaire supprimé avec succès.');
-        return $this->redirectToRoute();
+        return $this->redirect($request->getUri());
     }
 
     return $this->render('commentaire/confirm_delete1.html.twig', [

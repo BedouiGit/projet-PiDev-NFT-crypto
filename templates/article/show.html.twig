@@ -1,0 +1,30 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}list of Article{% endblock %}
+
+{% block content %}
+    <h1>Article</h1>
+<table class="table">
+    <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ article.titre }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ article.contenu }}</td>
+            </tr>
+                </tbody>
+            </table>
+
+<a href="{{ path('app_article_index_back') }}">back to list</a>
+
+    
+
+    {{ include('article/delete.html.twig') }}
+
+{% endblock %}
