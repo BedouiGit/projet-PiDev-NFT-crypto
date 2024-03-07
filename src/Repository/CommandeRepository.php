@@ -31,6 +31,15 @@ class CommandeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getRecentCommandes(): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.date > :date')
+            ->setParameter('date', new \DateTime('-7 days'));
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return Commande[] Returns an array of Commande objects
