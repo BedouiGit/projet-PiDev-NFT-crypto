@@ -58,7 +58,7 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
 
    
      $articles = $articleRepository->findAll();
-        if ($searchValue) {
+        if ($searchValue !== null) {
             $articles = $this->filterBySearch($articles, $searchValue);
         }
 
@@ -67,8 +67,8 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
         }
 
         return $this->render('article/show_back.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
+    'articles' => $articles,
+]);
     }
  private function filterBySearch(array $articles, string $searchValue): array
     {
