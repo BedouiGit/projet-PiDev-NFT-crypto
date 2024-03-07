@@ -118,15 +118,7 @@ class UserController extends AbstractController
              return $this->render('auth/edit-profile.html.twig')
          ;
     }
-
-    #[Route('/home', name: 'home')]
-    public function home(): Response
-   {
-            return $this->render('home/home.html.twig')
-        ;
-   }
     
-
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
