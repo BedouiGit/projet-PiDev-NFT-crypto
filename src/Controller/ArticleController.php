@@ -50,12 +50,40 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
         ]);
     }
         #[Route('/back', name: 'app_article_index_back', methods: ['GET'])]
-    public function back(ArticleRepository $articleRepository): Response
+    public function back(ArticleRepository $articleRepository, Request $request): Response
     {
+        
+ $searchValue = $request->query->get('search');
+        $dateFilter = $request->query->get('date');
+
+   
+     $articles = $articleRepository->findAll();
+        if ($searchValue !== null) {
+            $articles = $this->filterBySearch($articles, $searchValue);
+        }
+
+        if ($dateFilter) {
+            $articles = $this->filterByDate($articles, $dateFilter);
+        }
+
         return $this->render('article/show_back.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
+    'articles' => $articles,
+]);
     }
+ private function filterBySearch(array $articles, string $searchValue): array
+    {
+        return array_filter($articles, function ($article) use ($searchValue) {
+            return stripos($article->getTitre(), $searchValue) !== false || stripos($article->getContenu(), $searchValue) !== false;
+        });
+    }
+
+    private function filterByDate(array $articles, string $dateFilter): array
+    {
+        return array_filter($articles, function ($article) use ($dateFilter) {
+            return $article->getDate()->format('Y-m-d') === $dateFilter;
+        });
+    }
+
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
