@@ -4,20 +4,20 @@
 
 {% block content %}
     <div class="container py-5">
-        <h1 class="text-center mb-5">Your Cart</h1>
+        <h1 class="text-center mb-4 text-light">Your Cart</h1>
 
         <div class="row">
-            <div class="col-lg-8">
-                <div class="card shadow-sm">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12" data-sal="slide-up" data-sal-delay="250" data-sal-duration="800">
+                <div class="card shadow">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-dark">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="border-0">Product Image</th>
-                                        <th scope="col" class="border-0">Name</th>
-                                        <th scope="col" class="border-0">Price</th>
-                                        <th scope="col" class="border-0">Action</th>
+                                        <th scope="col">Product Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -26,12 +26,12 @@
                                             <td><img src="{{ asset('uploads/photos/' ~ nft.image) }}" class="img-fluid" style="max-width: 80px;" alt="Product Image"></td>
                                             <td>{{ nft.name }}</td>
                                             <td>{{ nft.price }}</td>
-                                            <td><a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td><a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-outline-light btn-sm">Remove</a></td>
                                         </tr>
                                     {% endfor %}
                                     {% if nfts|length == 0 %}
                                         <tr>
-                                            <td colspan="4" class="text-center">Your cart is empty</td>
+                                            <td colspan="4" class="text-center text-light">Your cart is empty</td>
                                         </tr>
                                     {% endif %}
                                 </tbody>
@@ -41,14 +41,14 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card shadow-sm">
+                <div class="card shadow">
                     <div class="card-body">
-                        <h5 class="card-title mb-4">Cart Summary</h5>
-                        <table class="table">
+                        <h5 class="card-title mb-4 text-light">Cart Summary</h5>
+                        <table class="table table-borderless table-dark">
                             <tbody>
                                 <tr>
-                                    <td>Total:</td>
-                                    <td>
+                                    <td><strong class="text-light">Total:</strong></td>
+                                    <td class="text-light">
                                         {% set total = 0 %}
                                         {% for nft in nfts %}
                                             {% set total = total + nft.price %}
@@ -65,7 +65,7 @@
                                 {% for nft in nfts %}
                                     {% set checkoutQuery = checkoutQuery ~ (checkoutQuery ? '&' : '') ~ 'nftIds[]=' ~ nft.id %}
                                 {% endfor %}
-                                <a href="/checkout?{{ checkoutQuery }}" class="btn btn-primary">Check Out</a>
+                                <a href="/checkout?{{ checkoutQuery }}" class="btn btn-light">Check Out</a>
                             {% endif %}
                         </div>
                     </div>

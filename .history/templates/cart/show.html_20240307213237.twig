@@ -26,7 +26,7 @@
                                             <td><img src="{{ asset('uploads/photos/' ~ nft.image) }}" class="img-fluid" style="max-width: 80px;" alt="Product Image"></td>
                                             <td>{{ nft.name }}</td>
                                             <td>{{ nft.price }}</td>
-                                            <td><a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td><a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-outline-danger btn-sm">Remove</a></td>
                                         </tr>
                                     {% endfor %}
                                     {% if nfts|length == 0 %}
@@ -60,13 +60,11 @@
                         </table>
                         <div class="d-grid gap-2">
                             <a href="{{ path('app_cart_empty') }}" class="btn btn-outline-secondary">Empty Cart</a>
-                            {% if nfts|length > 0 %}
-                                {% set checkoutQuery = '' %}
-                                {% for nft in nfts %}
-                                    {% set checkoutQuery = checkoutQuery ~ (checkoutQuery ? '&' : '') ~ 'nftIds[]=' ~ nft.id %}
-                                {% endfor %}
-                                <a href="/checkout?{{ checkoutQuery }}" class="btn btn-primary">Check Out</a>
-                            {% endif %}
+                            {% set checkoutQuery = '' %}
+                            {% for nft in nfts %}
+                                {% set checkoutQuery = checkoutQuery ~ (checkoutQuery ? '&' : '') ~ 'nftIds[]=' ~ nft.id %}
+                            {% endfor %}
+                            <a href="/checkout?{{ checkoutQuery }}" class="btn btn-primary">Check Out</a>
                         </div>
                     </div>
                 </div>
