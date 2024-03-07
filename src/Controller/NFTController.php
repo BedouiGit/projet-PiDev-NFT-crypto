@@ -6,6 +6,7 @@ use App\Entity\NFT;
 use App\Form\NFTType;
 use App\Repository\NFTRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class NFTController extends AbstractController
 {
     #[Route('/show', name: 'app_nft_show', methods: ['GET'])]
-    public function show(NFTRepository $nFTRepository): Response
+    public function show(NFTRepository $nFTRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $nfts = $nFTRepository->findAll();
+        $pagination = $paginator->paginate(
+            $nfts,      
+            $request->query->getInt('page', 1), // page number
+            8 // limit per page
+        );
+
         return $this->render('nft/show.html.twig', [
-            'nfts' => $nFTRepository->findAll(),
+            'nfts' => $nfts,
+            'pagination' => $pagination,
         ]);
     }
 
