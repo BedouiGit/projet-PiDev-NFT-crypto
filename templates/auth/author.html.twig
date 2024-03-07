@@ -636,10 +636,10 @@
                     <div class="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                         <div class="product-style-one no-overlay with-placeBid">
                             <div class="card-thumbnail">
-                                <a href="product-details.html">
+                                <a href="{{ path('app_nft_index', {'id': nft.id}) }}">
                                     <img src="assets/images/portfolio/portfolio-09.jpg" alt="NFT_portfolio">
                                 </a>
-                                <a href="product-details.html" class="btn btn-primary">Place Bid</a>
+                                <a href="{{ path('app_nft_index', {'id': nft.id}) }}" class="btn btn-primary">Place Bid</a>
                             </div>
                             <div class="product-share-wrapper">
                                 <div class="profile-share">

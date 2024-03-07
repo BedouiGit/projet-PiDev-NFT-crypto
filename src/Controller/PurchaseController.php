@@ -14,6 +14,7 @@ public function test(): Response
     return new Response('Test route works');
 }
 
+#[Route('/', name: 'home')]
 
     #[Route('/', name: 'home_page')]
     public function index(): Response

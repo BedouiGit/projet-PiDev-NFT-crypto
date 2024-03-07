@@ -54,8 +54,13 @@
                             </div>
     {{ form_errors(form.price) }}
                             <div class="input-box pb--20">
+                            <label for="dollerValue" class="form-label">Project</label>
+                                <div class="collection-single-wized">
+                                    <div class="create-collection-input">
+                                            {{ form_widget(form.project) }}
+                                    </div>
+                                </div>
                             <label for="dollerValue" class="form-label">Item Status</label>
-
                                 <div class="collection-single-wized">
                                     <div class="create-collection-input">
                                             {{ form_widget(form.status) }}
