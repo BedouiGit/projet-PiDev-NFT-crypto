@@ -21,6 +21,7 @@
                 <th>Date</th>
                 <th>Tags</th>
                 <th>actions</th>
+                 <th>pdf</th>
                     
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 <td>{{ article.contenu }}</td>
                 <td>{{ article.auteur }}</td>
                 <td>{{ article.date ? article.date|date('Y-m-d H:i:s') : '' }}</td>
+                  
                <td>
                     {% for tag in article.tags %}
                         {{ tag.nom }}{% if not loop.last %}, {% endif %}
@@ -41,6 +43,7 @@
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
                     <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
                 </td>
+                <td><a href="{{ path('app_pdf_generator', {'id': article.id}) }}" class="btn btn-success tooltips" >Imprimer article</a> </td>
            
                 
             </tr>
