@@ -42,6 +42,9 @@ class NFT
     #[ORM\ManyToOne(inversedBy: 'nFTs')]
     private ?User $User = null;
 
+    #[ORM\ManyToOne(inversedBy: 'nFTs')]
+    private ?Projets $project = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -159,6 +162,18 @@ class NFT
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getProject(): ?Projets
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Projets $project): static
+    {
+        $this->project = $project;
 
         return $this;
     }

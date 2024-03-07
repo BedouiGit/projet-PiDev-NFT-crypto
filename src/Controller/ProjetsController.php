@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\NFT;
 
 use App\Entity\Projets;
 use App\Form\ProjetsType;
@@ -83,10 +84,17 @@ public function new(Request $request, EntityManagerInterface $entityManager, Cat
 }
 
     #[Route('/{id}', name: 'app_projets_show', methods: ['GET'])]
-    public function show(Projets $projet): Response
+    public function show(int $id, EntityManagerInterface $entityManager): Response
     {
+        $projet = new Projets();
+        $projet = $entityManager->getRepository(Projets::class)->find($id);
+
+        $nfts = new nft();
+        $nfts = $entityManager->getRepository(NFT::class)->findBy(['project' => $projet]);
+
         return $this->render('projets/show.html.twig', [
             'projet' => $projet,
+            'nfts' => $nfts,
         ]);
     }
 

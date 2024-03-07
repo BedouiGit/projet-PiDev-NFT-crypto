@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predictions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Predictions</h1>
+    <div id="predictions">Loading predictions...</div>
+
+    <script>
+    function fetchPredictions() {
+        $.ajax({
+            url: '{{ path('predict') }}', 
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({}),
+            success: function(data) {
+                $('#predictions').html('');
+                data.predictions.forEach(function(prediction) {
+                    $('#predictions').append('<p>' + prediction + '</p>');
+                });
+            },
+            error: function() {
+                $('#predictions').html('<p>Error fetching predictions.</p>');
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        fetchPredictions(); // Fetch immediately on page load
+        setInterval(fetchPredictions, 30000); // Refresh every 30 seconds
+    });
+    </script>
+</body>
+</html>

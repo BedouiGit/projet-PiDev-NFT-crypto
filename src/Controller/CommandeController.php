@@ -7,6 +7,8 @@ use App\Entity\NFT;
 use App\Entity\User;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\NFTRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,7 +94,7 @@ class CommandeController extends AbstractController
             $entityManager->persist($nft);
             $entityManager->flush();
 
-            return $this->redirectToRoute('afterlogin', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home_page', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commande/add.html.twig', [
@@ -170,9 +172,10 @@ class CommandeController extends AbstractController
 
 
     #[Route('/commande/chart', name: 'commande_chart')]
-    public function commandeChart(CommandeRepository $commandeRepository): Response
+    public function commandeChart(CommandeRepository $commandeRepository, EntityManagerInterface $entityManager, NFTRepository $NFTRepository): Response
     {
         $purchaseData = $commandeRepository->getTotalPurchasesPerDay();
+        $topholders = $NFTRepository->getTopNFTOwners();
         
         $labels = [];
         $data = [];
@@ -181,9 +184,28 @@ class CommandeController extends AbstractController
             $data[] = $dayData['totalPurchases'];
         }
 
+
+        $holder = [];
+        $Qte = [];
+
+        foreach ($topholders as $tph) {
+            
+
+            if ($tph['userId'] === null) {
+                $holder[] = null;
+            } else {
+                $user = new User();
+                $user = $entityManager->getRepository(User::class)->find($tph['userId']);
+                $holder[] = $user->getFirstName();
+            }
+            $Qte[] = $tph['nftCount'];
+        }
+
         return $this->render('commande/stats.html.twig', [
             'labels' => $labels,
             'data' => $data,
+            'holder' => $holder,
+            'Qte' => $Qte,
         ]);
     }
 

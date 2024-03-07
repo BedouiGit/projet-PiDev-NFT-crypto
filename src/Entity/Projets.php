@@ -36,10 +36,14 @@ class Projets
 
     #[ORM\ManyToOne(inversedBy: 'Projets')]
     private ?Category $category ;
+
+    #[ORM\OneToMany(targetEntity: NFT::class, mappedBy: 'project')]
+    private Collection $nFTs;
     
     public function __construct()
     {
         $this->nft = new ArrayCollection();
+        $this->nFTs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,5 +151,13 @@ class Projets
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, NFT>
+     */
+    public function getNFTs(): Collection
+    {
+        return $this->nFTs;
     }
 }

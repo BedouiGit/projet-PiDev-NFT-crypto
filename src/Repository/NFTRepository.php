@@ -21,6 +21,21 @@ class NFTRepository extends ServiceEntityRepository
         parent::__construct($registry, NFT::class);
     }
 
+
+    public function getTopNFTOwners(int $limit = 10): array
+{
+    $qb = $this->createQueryBuilder('n');
+    $qb->select('IDENTITY(n.User) AS userId', 'COUNT(n.id) AS nftCount')
+       ->groupBy('n.User')
+       ->orderBy('nftCount', 'DESC')
+       ->setMaxResults($limit);
+
+    return $qb->getQuery()->getResult();
+}
+
+    
+    
+
 //    /**
 //     * @return NFT[] Returns an array of NFT objects
 //     */
