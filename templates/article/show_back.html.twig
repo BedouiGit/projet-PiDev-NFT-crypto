@@ -3,7 +3,13 @@
 {% block title %}Article index{% endblock %}
 
 {% block content %}
+
     <h1>Liste des articles</h1>
+    <form action="{{ path('app_article_index_back') }}" method="get">
+                    <input type="text" name="search" id="searchInput" placeholder="Search...">
+                    <input type="date" name="date" id="dateInput">
+                    <button type="submit" id="resetDateFilterButton">filter</button>
+                </form>
 
     <table class="table">
         <thead>

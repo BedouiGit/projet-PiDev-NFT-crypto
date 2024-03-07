@@ -31,6 +31,8 @@ class ActualiteController extends AbstractController
     private $mailer;
     private $logger; // Declare the logger property
 
+
+
     public function __construct(MailerInterface $mailer, LoggerInterface $logger) // Inject LoggerInterface
     {
         $this->mailer = $mailer;
