@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Predictions</title>
+
+{% extends 'baseback.html.twig' %}
+
+{% block title %}AI{% endblock %}
+
+{% block content %}
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
+
     <h1>Predictions</h1>
     <div id="predictions">Loading predictions...</div>
 
@@ -18,7 +20,20 @@
             success: function(data) {
                 $('#predictions').html('');
                 data.predictions.forEach(function(prediction) {
-                    $('#predictions').append('<p>' + prediction + '</p>');
+                    let message = '';
+                    let imagePath = '';
+                    if (prediction > 0.5) {
+                        message = 'The sales will hopefully go up.';
+                        imagePath = "{{ asset('BackOffice/img/Green_Arrow_Up.png') }}"; 
+                    } else if (prediction < 0.5) {
+                        message = 'Sales will hopefully go down.';
+                        imagePath = "{{ asset('BackOffice/img/131096-down-arrow-png-free-photo.png') }}"; 
+                    } else { // prediction === 0.5
+                        message = 'The market will go sideways.';
+                        imagePath = 'path/to/your/sideways_image.jpg'; 
+                    }
+                    // Append the message and image to the predictions div
+                    $('#predictions').append('<p>' + message + '</p><img src="' + imagePath + '" alt="Prediction Image" style="width:100px; height:auto;">');
                 });
             },
             error: function() {
@@ -29,8 +44,7 @@
 
     $(document).ready(function() {
         fetchPredictions(); // Fetch immediately on page load
-        setInterval(fetchPredictions, 30000); // Refresh every 30 seconds
+        setInterval(fetchPredictions, 300000); // Refresh every 5 minutes
     });
     </script>
-</body>
-</html>
+{% endblock %}

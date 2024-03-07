@@ -153,8 +153,12 @@ class CommandeController extends AbstractController
     
 
     #[Route('commande/{id}', name: 'app_commande_delete', methods: ['POST'])]
-    public function delete(Request $request, Commande $cmd, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
+        $cmd = new Commande();
+        $cmd = $entityManager->getRepository(Commande::class)->find($id);
+
+
         $nfts = $entityManager->getRepository(NFT::class)->findBy(['commande' => $cmd]);
 
         foreach ($nfts as $nft) {

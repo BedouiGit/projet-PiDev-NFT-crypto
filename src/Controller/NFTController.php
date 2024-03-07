@@ -130,8 +130,11 @@ class NFTController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_nft_delete', methods: ['POST'])]
-    public function delete(Request $request, NFT $nFT, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
+        $nFT = new nft();
+        $nFT = $entityManager->getRepository(nft::class)->find($id);
+
         if ($this->isCsrfTokenValid('delete'.$nFT->getId(), $request->request->get('_token'))) {
         $commandes = $nFT->getCommande();
         if ($commandes !== null) {
@@ -144,7 +147,7 @@ class NFTController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_nft_showback', [], Response::HTTP_SEE_OTHER);
     }
 
 
