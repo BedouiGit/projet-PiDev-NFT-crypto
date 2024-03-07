@@ -139,8 +139,12 @@ public function afficherActualitee(Request $request, ActualiteRepository $actual
  
     
     #[Route("/modifier/{id}", name: "app_modifier_actualite")]
-    public function modifierActualite(Request $request, Actualite $actualite, EntityManagerInterface $em): Response
+    public function modifierActualite(Request $request, $id, EntityManagerInterface $em): Response
     {
+        $actualite = $em->getRepository(Actualite::class)->find($id);
+        if (!$actualite) {
+            throw $this->createNotFoundException('The actualite does not exist');
+        }
         $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
         
@@ -179,31 +183,45 @@ public function afficherActualitee(Request $request, ActualiteRepository $actual
 
 
     #[Route("/supprimer/{id<\d+>}", name: "app_supprimer_actualite")]
-    public function supprimerActualite(Actualite $actualite, EntityManagerInterface $em, Request $request): Response
-    {
-        $form = $this->createFormBuilder()
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm'])
-            ->getForm();
-    
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->remove($actualite);
-            $em->flush();
-    
-            return $this->redirectToRoute('app_afficher_actualitee');
-        }
-    
-        return $this->render('actualite/confirmation_delete.html.twig', [
-            'actualite' => $actualite,
-            'form' => $form->createView(),
-        ]);
+public function supprimerActualite($id, EntityManagerInterface $em, Request $request): Response
+{
+    $actualite = $em->getRepository(Actualite::class)->find($id);
+    if (!$actualite) {
+        throw $this->createNotFoundException('The actualite does not exist');
+    }   
+
+    $form = $this->createFormBuilder()
+        ->add('confirm', SubmitType::class, ['label' => 'Confirm'])
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->remove($actualite);
+        $em->flush();
+
+        return $this->redirectToRoute('app_afficher_actualitee');
     }
+
+    return $this->render('actualite/confirmation_delete.html.twig', [
+        'actualite' => $actualite,
+        'form' => $form->createView(),
+    ]);
+}
+
     
 
 #[Route("/supprimer-commentaire/{id<\d+>}", name: "app_supprimer_commentaire")]
-public function supprimerCommentaire(Commentaire $commentaire, EntityManagerInterface $em, Request $request): Response
+public function supprimerCommentaire(int $id, EntityManagerInterface $em, Request $request): Response
 {
+    // Fetch the Commentaire entity using the provided id
+    $commentaire = $em->getRepository(Commentaire::class)->find($id);
+    
+    // Check if the Commentaire entity exists
+    if (!$commentaire) {
+        throw $this->createNotFoundException('The commentaire does not exist');
+    }
+    
     $actualiteId = $commentaire->getActualite()->getId();
     
     $form = $this->createFormBuilder()
