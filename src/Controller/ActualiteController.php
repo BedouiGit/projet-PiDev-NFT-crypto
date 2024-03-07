@@ -281,8 +281,8 @@ public function subscribe(Request $request, EntityManagerInterface $em, MailerIn
     ]);
 }
 
-#[Route('/charts', name: 'app-chart')]
-public function chartData(ChartBuilderInterface $chartBuilder, ActualiteRepository $actualiteRepository): Response
+#[Route('/charts', name: 'app_chart_actualite')]
+public function chartData(ActualiteRepository $actualiteRepository): Response
 {
     
     

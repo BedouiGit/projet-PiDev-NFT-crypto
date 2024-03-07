@@ -56,7 +56,7 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/chart', name: 'app_chart')]
+    #[Route('/chart', name: 'app_chart_user')]
 
     public function userChart(UserRepository $repo): Response
     {
@@ -89,7 +89,7 @@ class UserController extends AbstractController
         if ($security->isGranted('ROLE_USER')) 
         {
             $nfts = $nFTRepository->findAll();
-            
+
             return $this->render('auth/author.html.twig', [
                 'nfts' =>  $nfts,
             ]);
@@ -166,16 +166,24 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(int $id, EntityManagerInterface $entityManager ): Response
     {
+
+        $user = new User();
+        $user = $entityManager->getRepository(User::class)->find($id);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, $id): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
+
+        $user = new User();
+        $user = $entityManager->getRepository(User::class)->find($id);
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -211,8 +219,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
+
+        
+        $user = new User();
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
