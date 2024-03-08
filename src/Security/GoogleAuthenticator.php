@@ -63,6 +63,19 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                 // 3) Maybe you just want to "register" them by creating
                 $user = new User();
                 $user->setGoogleId($googleUser->getId());
+                $user->setEmail($googleUser->getEmail());
+                $length = 12; // Adjust password length as needed
+                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()"; // Allowed password characters
+                $password = substr(str_shuffle($chars), 0, $length);
+    
+                $user->setPassword($password);
+                $user->setFirstName($googleUser->getFirstName());
+                $user->setLastName($googleUser->getLastName());
+                $user->setAddress("");
+                $user->setAge(18);
+                $user->setGender("male");
+                $user->setTel(52452332);
+    
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
