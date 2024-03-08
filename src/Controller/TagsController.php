@@ -66,8 +66,11 @@ class TagsController extends AbstractController
         ]);
     }
     #[Route('/{id}/front', name: 'app_tag_front_show', methods: ['GET'])]
-    public function showfront(Tags $tag): Response
+    public function showfront(int $id, EntityManagerInterface $entityManager): Response
     {
+        $tag = new tags();
+        $tag = $entityManager->getRepository(Tags::class)->find($id);
+
         return $this->render('tags/showfront.html.twig', [
             'tag' => $tag,
         ]);
