@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="chart-container"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // Parse the JSON string passed from PHP
+        var chartData = {{ chartDataJson|raw }};
+        
+        // Output the chartData variable to the console for debugging
+        console.log(chartData);
+        
+        // Use the chartData object to render the chart
+        // Add your chart rendering logic here...
+    </script>
+{% endblock %}

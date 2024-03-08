@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+qrcode_generate:
+    path: /qrcode/{data}
+    controller: App\Controller\QrCodeController::generateQrCode
+

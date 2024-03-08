@@ -78,7 +78,7 @@ class CommandeController extends AbstractController
         $email = $request->getSession()->get(Security::LAST_USERNAME);
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         $nft->setUser($user);
-        
+            
         $commande->setUser($user);
 
         $form = $this->createForm(CommandeType::class, $commande);

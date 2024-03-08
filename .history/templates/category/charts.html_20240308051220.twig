@@ -1,0 +1,38 @@
+{# templates/chart/projects_per_category.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects per Category Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="projectsPerCategoryChart"></canvas>
+    <script>
+        fetch('{{ path('app_chart_projects_per_category') }}')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('projectsPerCategoryChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            label: 'Number of Projects',
+                            data: Object.values(data),
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
