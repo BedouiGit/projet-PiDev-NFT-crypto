@@ -21,7 +21,7 @@
                 <div class=" offset-2 col-lg-4 col-md-6 ml_md--0 ml_sm--0 col-sm-12">
                     <div class="form-wrapper-one">
                         <h4>Login</h4>
-                        <form>
+                        <form novalidate>
                             <div class="mb-5">
                                 <label for="inputEmail" class="form-label">Email address</label>
                                 <input style="color:white;" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -29,6 +29,8 @@
                             <div class="mb-5">
                                 <label for="inputPassword" class="form-label">Password</label>
                                 <input style="color:white;" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                                <br>
+                            <a href="{{ path('app_forgot_password_request')}}">Forgot password ?</a>
                             </div>
 
                             <div class="mb-5 rn-check-box">
@@ -41,22 +43,24 @@
 
                             <button type="submit" class="btn btn-primary mr--15">Log In</button>
                             <a href="{{path('app_register')}}" class="btn btn-primary-alta">Sign Up</a>
-                            <br>
-                            <br>
-                            <a href="{{ path('app_forgot_password_request')}}">Forgot password ?</a>
-
+                            <br><br><br>
+                            <a href="{{path('connect_google')}}" type="button" class="another-login login-google">
+                            <img class="small-image" style="max-width:20px;" src="FrontOffice/assets/images/icons/google.png" alt="">
+                            <span>- Log in with Google</span> </a> 
+                            
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                {# <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="social-share-media form-wrapper-one">
                         <h6>Another way to log in</h6>
-                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/google.png" alt=""> <span>Log in with Google</span></button>
-                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt=""> <span>Log in with Facebook</span></button>
+                        <br><br>
+                                             
+                         <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt=""> <span>Log in with Facebook</span></button>
                         <button class="another-login login-twitter"> <img class="small-image" src="FrontOffice/assets/images/icons/tweeter.png" alt=""> <span>Log in with Twitter</span></button>
-                        <button class="another-login login-linkedin"> <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt=""> <span>Log in with linkedin</span></button>
+                        <button class="another-login login-linkedin"> <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt=""> <span>Log in with linkedin</span></button> 
                     </div>
-                </div>
+                </div> #}
             </div>
         </div>
     </div>

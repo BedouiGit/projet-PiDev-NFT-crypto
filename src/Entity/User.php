@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column ]
+    #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -52,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isBanned = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $googleId = null;
 
     
 
@@ -238,6 +241,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
 
         $this->isBanned=false ;
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(string $googleId): static
+    {
+        $this->googleId = $googleId;
+
         return $this;
     }
 }

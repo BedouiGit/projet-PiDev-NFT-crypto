@@ -27,23 +27,23 @@
 			                <div class="mb-5">
                                     <label for="address" class="form-label">Address</label>
                                     {{ form_widget(registrationForm.address) }}
-                                </div>
-                                <div class="mb-5">
+                            </div>
+                            <div class="mb-5">
                                 <label for="tel" class="form-label">Phone Number</label>
                                 {{ form_widget(registrationForm.tel) }}
-                                </div>
-                                <div class="mb-5">
+                            </div>
+                            <div class="mb-5">
                                 <label for="gender" class="form-label">Gender</label>
                                 {{ form_widget(registrationForm.gender) }}
-                                </div>
-                                <div class="mb-5">
+                            </div>
+                            <div class="mb-5">
                                 <label for="age" class="form-label">Age</label>
                                 {{ form_widget(registrationForm.age) }}
-                                </div>
-                                <div class="mb-5">
+                            </div>
+                            <div class="mb-5">
                                 <label for="newPassword" class="form-label"> Password</label>
                                 {{form_widget(registrationForm.plainPassword) }}
-                            </div>
+                                </div>
                 
 
                             <div class="mb-5 rn-check-box">
@@ -65,11 +65,26 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="social-share-media form-wrapper-one">
                         <h6>Another way to sign up</h6>
-                        <p> Lorem ipsum dolor sit, amet sectetur adipisicing elit.cumque.</p>
-                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/google.png" alt=""> <span>Log in with Google</span></button>
-                        <button class="another-login login-facebook"> <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt=""> <span>Log in with Facebook</span></button>
-                        <button class="another-login login-twitter"> <img class="small-image" src="FrontOffice/assets/images/icons/tweeter.png" alt=""> <span>Log in with Twitter</span></button>
-                        <button class="another-login login-linkedin"> <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt=""> <span>Log in with linkedin</span></button>
+                        <a href="{{path('connect_google')}}" class="another-login login-google">
+  <img class="small-image" src="FrontOffice/assets/images/icons/google.png" alt="Google Login">
+  <span>Log in with Google</span>
+</a>
+
+<a href="https://www.facebook.com/v15.0/dialog/oauth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email" class="another-login login-facebook">
+  <img class="small-image" src="FrontOffice/assets/images/icons/facebook.png" alt="Facebook Login">
+  <span>Log in with Facebook</span>
+</a>
+
+<a href="https://twitter.com/intent/auth/login" class="another-login login-twitter">
+  <img class="small-image" src="FrontOffice/assets/images/icons/tweeter.png" alt="Twitter Login">
+  <span>Log in with Twitter</span>
+</a>
+
+<a href="https://www.linkedin.com/oauth/v2/authorization?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=r_liteprofile" class="another-login login-linkedin">
+  <img class="small-image" src="FrontOffice/assets/images/icons/linkedin.png" alt="LinkedIn Login">
+  <span>Log in with LinkedIn</span>
+</a>
+
                     </div>
                 </div>
             </div>

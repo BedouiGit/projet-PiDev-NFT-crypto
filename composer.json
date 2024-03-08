@@ -14,6 +14,8 @@
         "doctrine/orm": "^3.0",
         "dompdf/dompdf": "^2.0",
         "knplabs/knp-paginator-bundle": "*",
+        "knpuniversity/oauth2-client-bundle": "^2.18",
+        "league/oauth2-google": "^4.0",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "5.4.*",
         "symfony/asset-mapper": "^6.3",
