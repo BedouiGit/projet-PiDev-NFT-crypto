@@ -1,0 +1,49 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <section class="cart-section mt-150 mb-150">
+        <div class="container">
+            <h1 class="text-center mb-4">Your Cart</h1>
+            <div class="row">
+                <div class="col-lg-8">
+                    {% if nfts|length == 0 %}
+                        <p class="text-center">Your cart is empty</p>
+                    {% else %}
+                        {% for nft in nfts %}
+                            <div class="cart-item mb-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <img src="{{ asset('uploads/photos/' ~ nft.image) }}" alt="Product Image" class="img-fluid">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h3>{{ nft.name }}</h3>
+                                        <p>Price: {{ nft.price }}</p>
+                                        <a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-danger">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col-lg-4">
+                    <div class="total-section bg-light p-4">
+                        <h2 class="mb-3">Total</h2>
+                        <div class="total-amount">
+                            <h3>{{ total }}</h3>
+                        </div>
+                        <div class="cart-buttons mt-4">
+                            <a href="{{ path('app_cart_empty') }}" class="btn btn-secondary btn-block">Empty Cart</a>
+                            {% set checkoutQuery = '' %}
+                            {% for nft in nfts %}
+                                {% set checkoutQuery = checkoutQuery ~ (checkoutQuery ? '&' : '') ~ 'nftIds[]=' ~ nft.id %}
+                            {% endfor %}
+                            <a href="/checkout?{{ checkoutQuery }}" class="btn btn-primary btn-block mt-3">Check Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# routes.yaml
+app_chart_projects_per_category:
+    path: /chart/projects_per_category
+    controller: App\Controller\ChartController::projectsPerCategoryChart
+

@@ -1,0 +1,49 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <section class="cart-section mt-150 mb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <h1>Cart</h1>
+                    {% if nfts|length == 0 %}
+                        <p class="text-center">Votre panier est vide</p>
+                    {% else %}
+                        <div class="cart-items">
+                            {% for nft in nfts %}
+                                <div class="cart-item">
+                                    <div class="cart-item-image">
+                                        <img src="{{ asset('uploads/photos/' ~ nft.image) }}" alt="Product Image">
+                                    </div>
+                                    <div class="cart-item-details">
+                                        <h3>{{ nft.name }}</h3>
+                                        <p>{{ nft.price }}</p>
+                                        <a href="{{ path('app_cart_deletenft', {id: nft.id}) }}" class="btn btn-danger">Remove</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4">
+                    <div class="total-section">
+                        <h2>Total</h2>
+                        <div class="total-amount">
+                            {% set total = 0 %}
+                            {% for nft in nfts %}
+                                {% set total = total + nft.price %}
+                            {% endfor %}
+                            <p>{{ total }}</p>
+                        </div>
+                        <div class="cart-buttons">
+                            <a href="{{ path('app_cart_empty') }}" class="btn btn-secondary">Empty Cart</a>
+                            <a href="/checkout" class="btn btn-primary">Check Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

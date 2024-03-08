@@ -1,0 +1,75 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content %}
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Nombre de projets par catégorie</h1>
+        <p class="mb-4">Visualisation du nombre de projets par catégorie</p>
+
+        <!-- Chart -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Nombre de projets par catégorie</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="projectsByCategoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Script to generate the chart -->
+    <script>
+        // Parse the JSON data passed from PHP
+        var categoryData = JSON.parse('{{ categoryDataJson|raw }}');
+
+        // Get the canvas element
+        var ctx = document.getElementById('projectsByCategoryChart').getContext('2d');
+
+        // Create the chart
+        var projectsByCategoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(categoryData),
+                datasets: [{
+                    label: 'Nombre de projets',
+                    data: Object.values(categoryData),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

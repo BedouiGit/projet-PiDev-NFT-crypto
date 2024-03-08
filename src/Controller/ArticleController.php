@@ -95,7 +95,7 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
 
         if ($form->isSubmitted() && $form->isValid()) {
             $accountSid = 'ACc83a7b2bb9732050d7f7c6ab9ecc6be0';
-            $authToken = '99dc8e95df6e1b1cb155347c40192656';
+            $authToken = 'b8426e49c2a328d3a44d6460760fcfe8';
             $client = new Client($accountSid, $authToken);
     
             $message = $client->messages->create(
