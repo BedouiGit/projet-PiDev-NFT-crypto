@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
             $commande->setUser($user);
            
             $min = strtotime('2024-03-02 17:18:28');
-            $max = strtotime('2024-05-22 17:18:28');
+            $max = strtotime('2024-07-22 17:18:28');
             $val = rand($min, $max);
             $date = new \DateTime("@$val");
             $commande->setDate($date);

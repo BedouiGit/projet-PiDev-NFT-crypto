@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Tags;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -93,6 +94,17 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $accountSid = 'ACc83a7b2bb9732050d7f7c6ab9ecc6be0';
+            $authToken = '99dc8e95df6e1b1cb155347c40192656';
+            $client = new Client($accountSid, $authToken);
+    
+            $message = $client->messages->create(
+                '+21644888050', // replace with admin's phone number
+                [
+                    'from' => '+19149964858', // replace with your Twilio phone number
+                    'body' => 'New article check it out  ' ,
+                ]
+            );
             $photoFile = $form->get('photo')->getData();
 
         if ($photoFile) {
@@ -106,7 +118,7 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_index_back', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('article/new.html.twig', [
@@ -129,12 +141,18 @@ public function index(ArticleRepository $articleRepository, PaginatorInterface $
     
     
     #[Route('/{id}/front', name: 'app_article_front_show', methods: ['GET'])]
-    public function showfront(Article $article): Response
-    {
-        return $this->render('article/showfront.html.twig', [
-            'article' => $article,
-        ]);
+public function showfront(int $id, EntityManagerInterface $entityManager): Response
+{
+    $article = $entityManager->getRepository(Article::class)->find($id);
+
+    if (!$article) {
+        throw $this->createNotFoundException('Article not found');
     }
+
+    return $this->render('article/showfront.html.twig', [
+        'article' => $article,
+    ]);
+}
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager,int $id): Response

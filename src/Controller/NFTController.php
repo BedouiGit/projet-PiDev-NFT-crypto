@@ -6,6 +6,7 @@ use App\Entity\NFT;
 use App\Form\NFTType;
 use App\Repository\NFTRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class NFTController extends AbstractController
 {
     #[Route('/show', name: 'app_nft_show', methods: ['GET'])]
-    public function show(NFTRepository $nFTRepository): Response
+    public function show(NFTRepository $nFTRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $nfts = $nFTRepository->findAll();
+        $pagination = $paginator->paginate(
+            $nfts,      
+            $request->query->getInt('page', 1), // page number
+            8 // limit per page
+        );
+
         return $this->render('nft/show.html.twig', [
-            'nfts' => $nFTRepository->findAll(),
+            'nfts' => $nfts,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -121,8 +130,11 @@ class NFTController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_nft_delete', methods: ['POST'])]
-    public function delete(Request $request, NFT $nFT, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
+        $nFT = new nft();
+        $nFT = $entityManager->getRepository(nft::class)->find($id);
+
         if ($this->isCsrfTokenValid('delete'.$nFT->getId(), $request->request->get('_token'))) {
         $commandes = $nFT->getCommande();
         if ($commandes !== null) {
@@ -135,7 +147,7 @@ class NFTController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_nft_show', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_nft_showback', [], Response::HTTP_SEE_OTHER);
     }
 
 
