@@ -90,7 +90,7 @@ class DashBoardCategoryController extends AbstractController
           if (!$category) {
               throw $this->createNotFoundException('The category does not exist');
           }
-    }
+    
         return $this->render('dash_board_category/show.html.twig', [
             'category' => $category,
         ]);

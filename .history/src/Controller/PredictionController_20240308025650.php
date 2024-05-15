@@ -32,11 +32,7 @@ class PredictionController extends AbstractController
         ];
         }, $commandes);
 
-<<<<<<< HEAD
-        $response = $this->httpClient->request('POST', 'http://192.168.142.1:5000/predict', [
-=======
         $response = $this->httpClient->request('POST', 'http://192.168.1.134:5000/predict', [
->>>>>>> d82c3d3328464567ab069db143a42f1cf3b63518
             'json' => $formattedData,
         ]);
 

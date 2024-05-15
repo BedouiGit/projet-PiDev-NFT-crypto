@@ -149,3 +149,4 @@ class CategoryController extends AbstractController
             'Content-Type' => $qrCode->getContentType()
         ]);
     }
+}

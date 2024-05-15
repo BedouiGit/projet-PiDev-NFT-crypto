@@ -3,7 +3,50 @@
 {% block title %}NFT{% endblock %}
 
 {% block content %}
-    <h1>NFT</h1>
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Parallax container with news header -->
+        <div class="parallax">
+            <h3 class="news-header"> NFT </h3>
+            
+        </div>
+        
+<style>
+    .parallax {
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        padding: 2px 0; /* Adjust padding as needed */
+    }
+    
+    .news-header {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite alternate; /* Add glowing animation */
+    }
+    
+    @keyframes glow {
+        from {
+            text-shadow: 0 0 10px rgba(34, 60, 156, 0.8), 0 0 20px rgba(75, 0, 203, 0.8); /* Initial shadow */
+        }
+        to {
+            text-shadow: 0 0 20px rgba(41, 87, 186, 0.8), 0 0 40px rgba(67, 85, 179, 0.8), 0 0 60px rgba(255, 255, 255, 0.8); /* Glowing effect */
+        }
+    }
+    
+    
+    .news-subheader {
+        font-size: 13px;
+        font-style: italic;
+        margin-top: 5px;
+        line-height: 1.4; /* Adjust line height for better spacing */
+    }
+    
+    
+</style>        
 
         <div class="rn-collection-area rn-section-gapTop">
         <div class="container">

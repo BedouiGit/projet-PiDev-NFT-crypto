@@ -129,7 +129,7 @@ class DashBoardCategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_dash_board_category_delete', methods: ['POST'])]
-    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager ? ): Response
+    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager, $id  ): Response
     {
         $category = $entityManager->getRepository(Category::class)->find($id);
         if (!$category) {

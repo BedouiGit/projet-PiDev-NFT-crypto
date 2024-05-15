@@ -13,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PredictionController extends AbstractController
 {
-  x
+  
 
     public function __construct(HttpClientInterface $httpClient)
     {

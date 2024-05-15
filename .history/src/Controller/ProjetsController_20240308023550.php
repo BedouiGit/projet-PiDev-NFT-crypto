@@ -17,7 +17,7 @@ use App\Repository\CategoryRepository;
 class ProjetsController extends AbstractController
 {
     #[Route('/category/{id}', name: 'app_projets_index', methods: ['GET'])]
-    public function index(ProjetsRepository $projetsRepository , Request $request , int $id,, EntityManagerInterface $em): Response
+    public function index(ProjetsRepository $projetsRepository , Request $request , int $id, EntityManagerInterface $em): Response
     {
         $categoryId = $request->attributes->get('id'); 
         $perPage = 4;

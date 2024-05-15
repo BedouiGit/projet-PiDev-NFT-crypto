@@ -138,7 +138,7 @@ class DashBoardCategoryController extends AbstractController
 
 
     #[Route('/charts', name: 'app_chart_categories')]
-    public function chartData(CategoryRepository $categoryRepository , , Category $category): Response
+    public function chartData(CategoryRepository $categoryRepository  , Category $category): Response
     {
         $categories = $categoryRepository->findAll();
         $categoryProjectsCounts = [];

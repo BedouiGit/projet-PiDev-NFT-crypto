@@ -72,9 +72,10 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                 $user->setFirstName($googleUser->getFirstName());
                 $user->setLastName($googleUser->getLastName());
                 $user->setAddress("");
-                $user->setAge(18);
+                $user->setAge(00);
                 $user->setGender("male");
-                $user->setTel(52452332);
+                $user->setTel(00000000);
+                $user->setRoles(['ROLE_USER']);
     
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
@@ -87,7 +88,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "app_homepage" to some route in your app
-        $targetUrl = $this->router->generate('home_page');
+        $targetUrl = $this->router->generate('auth_front');
 
         return new RedirectResponse($targetUrl);
     
