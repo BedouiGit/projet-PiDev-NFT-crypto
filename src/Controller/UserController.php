@@ -107,9 +107,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/auth', name: 'auth_front')]
-    public function auth(UserRepository $repo): Response
+    public function auth(NFTRepository $nFTRepository): Response
     {
-            return $this->render('auth/author.html.twig');
+        $nfts = $nFTRepository->findAll();
+    
+        return $this->render('auth/author.html.twig', [
+            'nfts' => $nfts
+        ]);
     }
 
      #[Route('/editprofile', name: 'edit_profile')]
@@ -169,6 +173,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
@@ -191,6 +196,8 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
     #[Route('/{id}/editAuth', name: 'edit_auth', methods: ['GET', 'POST'])]
     public function edit_User(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
@@ -202,8 +209,6 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-           
-
             return $this->redirectToRoute('auth_front', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -217,7 +222,6 @@ class UserController extends AbstractController
     public function delete(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
 
-        
         $user = new User();
         $user = $entityManager->getRepository(User::class)->find($id);
 

@@ -576,9 +576,9 @@
 
                 <div class="tab-pane row g-5 d-flex fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <!-- start single product -->
-                <a style="position: absolute; right: 60px; margin: 60px;" href="{{ path('app_nft_usershow') }}" class="btn btn-primary">list nfts</a>
+                    <a style="position: absolute; right: 60px; margin: 60px;" href="{{ path('app_nft_usershow') }}" class="btn btn-primary">list nfts</a>
 
-            {% for nft in nfts %}
+                    {% for nft in nfts %}
 
                     {% if nft.user == app.user  %}
                     <div class="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -623,7 +623,7 @@
                         </div>
                     </div>
                     {% endif %}
-            {% endfor %}
+                    {% endfor %}
 
                     <!-- end single product -->
 
